@@ -12,7 +12,7 @@
   Rajeev  Verma
 
 
-  | blog
+  | Lagrange Duality and Max-Min Inequality
 
 </title>
 <meta name="description" content="Academic Website of Rajeev Verma
@@ -38,7 +38,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22></text></svg>">
 
 <link rel="stylesheet" href="/assets/css/main.css">
-<link rel="canonical" href="/blog/">
+<link rel="canonical" href="/blog/2021/lagrange_max_min/">
 
 <!-- JQuery -->
 <!-- jQuery -->
@@ -103,14 +103,10 @@
             <a class="nav-link" href="/blog/">
               blog
               
-              <span class="sr-only">(current)</span>
-              
             </a>
           </li>
           
           <!-- Other pages -->
-          
-          
           
           
           
@@ -150,38 +146,71 @@
     <!-- Content -->
 
     <div class="container mt-5">
-      <div class="post">
+      
 
-  <div class="header-bar">
-    <h1>Blog</h1>
-    <h2></h2>
-  </div>
+<div class="post">
 
+  <header class="post-header">
+    <h1 class="post-title">Lagrange Duality and Max-Min Inequality</h1>
+    <p class="post-meta">October 30, 2021</p>
+  </header>
 
-  <ul class="post-list">
-    
-      <li>
-        <h3><a class="post-title" href="/blog/2022/decision_making_under_uncertainty/">Decision Making under Uncertainty-Part 1</a></h3>
-        <p class="post-meta">June 4, 2022</p>
-        <p>motivating the need for imprecise probabilities</p>
-      </li>
-    
-      <li>
-        <h3><a class="post-title" href="/blog/2021/calibration_surrogate_risk/">Surrogate Risk Consistency and Calibration</a></h3>
-        <p class="post-meta">October 31, 2021</p>
-        <p>In progress</p>
-      </li>
-    
-      <li>
-        <h3><a class="post-title" href="/blog/2021/lagrange_max_min/">Lagrange Duality and Max-Min Inequality</a></h3>
-        <p class="post-meta">October 30, 2021</p>
-        <p>Relating Max-Min Inequality to the Lagrange Duality</p>
-      </li>
-    
-  </ul>
+  <article class="post-content">
+    <p>In this post, we review the Lagrange Duality and give a min-max inequality based interpretation of the duality. We first describe the general optimization problem:
+Given any optimization problem (*) of the form:</p>
+
+\[\text{minimize} \rm\ f_{0}(x)\]
+
+\[\text{s.t.} \; f_{i}(x) \leq 0, \; i=1,\ldots, m \\\]
+
+\[h_{i}(x) = 0, \; i=1,\ldots,p\]
+
+<p>The above problem can be convex problem, non-convex problem, or very well be NP-hard problem. We define the Lagrangian function \(L: \mathbb{R}^{n}\times \mathbb{R}^{m}\times \mathbb{R}^{p} \rightarrow \mathbb{R}\) as follows:</p>
+
+\[L(x, \mathbb{\lambda}, \mathbb{\nu}) = f_{0}(x) + \sum_{i=1}^{m}\lambda_{i}f_{i}(x) + \sum_{i=1}^{p}\nu_{i}h_{i}(x)\]
+
+<p>And the Lagrangian dual function as \(g(\lambda, \nu) = \inf_{x}L(x, \mathbf{\lambda}, \mathbf{\nu})\). Then, we have the following proposition:</p>
+
+<p><em><strong>Proposition 1</strong> : For \(\lambda \geq 0\), the optimal value of \(g(\lambda, \nu)\) denoted as \(g(\lambda^{*}, \nu^{*})\) is the lower-bound on the optimal value of the original problem (*) denoted as \(f_{0}(x^{*})\).</em></p>
+
+<p>The above can be easily proved using the definition of \(g(\lambda, \nu)\) and the infimum. We call the original problem (*) as the primal problem, and define the following optimization problem as the dual problem.</p>
+
+\[\text{maximize} \;g(\lambda, \nu) \; \text{subject to} \; \lambda \geq 0\]
+
+<p>We can prove that the dual problem will always be a convex optimization problem.
+From Proposition 1, we have \(g(\lambda^{*}, \nu^{*}) \leq f_{0}(x^{*})\). When this inequality is strict, we call it <em>Weak Duality</em>. And when \((\lambda^{*}, \nu^{*}) = f_{0}(x^{*})\), we call it the <em>Strong Duality</em>. Strong Duality says that solving the dual problem gives the optimal value of the primal problem as well.</p>
+
+<p>We next review the max-min inequality.</p>
+
+<p><em><strong>Lemma</strong>: For a function \(\phi(w,z)\), we have the following inequality</em></p>
+
+\[\sup_{z \in Z} \inf_{w \in W}\phi(w,z) \leq \inf_{w \in W} \sup_{z \in Z}\phi(w, z)\]
+
+<p>More information about this inequality can be found at <a href="http://wittawat.com/posts/max_min_inequality.html" target="_blank" rel="noopener noreferrer">http://wittawat.com/posts/max_min_inequality.html</a>.</p>
+
+<p>Next, the max-min inequality can give us the Lagrange Duality. Consider the optimal value of the dual problem \(g(\lambda^{*}, \nu^{*})\), then</p>
+
+\[g(\lambda^{*}, \nu^{*}) = g(\lambda^{*}, \nu^{*}) = \sup_{\lambda \geq 0} g(\lambda, \nu) = \sup_{\lambda \geq 0}\inf_{x}L(x, \lambda, \nu)\]
+
+<p>Next consider \(\sup_{\lambda \geq 0} L(x, \lambda, \nu) = \sup_{\lambda \geq 0} f_{0}(x) + \sum_{i=1}^{m}\lambda_{i}f_{i}(x) + \sum_{i=1}^{p}\nu_{i}h_{i}(x)\) which can be written as</p>
+
+\[\begin{cases}
+f_{0}(x) \rm\ if \rm\ f_{i}(x) \leq 0, \; i=1, \ldots m, \;\; \rm\ and \rm\ h_{i}(x) = 0 \;\; i=1 \ldots p \\\\
+\infty \; \text{otherwise}
+\end{cases}\]
+
+<p>Thus, the primal problem can be written as \(\inf_{x}\sup_{\lambda \geq 0}L(x, \lambda, \nu)\)</p>
+
+<p>Then, from the max-min inequality</p>
+
+\[\sup_{\lambda \geq 0}\inf_{x}L(x, \lambda, \nu) \leq  \inf_{x}\sup_{\lambda \geq 0}L(x, \lambda, \nu)\]
+
+<p>Or, the solution of the dual problem forms a lower bound on the solution of the primal problem.
+Thus, we can derive the Lagrange Duality from the max-min inequality.</p>
+
+  </article>
 
   
-
 
 </div>
 
@@ -192,8 +221,8 @@
     
 <footer class="fixed-bottom">
   <div class="container mt-0">
-    &copy; Copyright 2022 Rajeev  Verma.
-    Based on <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
+    © Copyright 2022 Rajeev  Verma.
+    Based on <a href="https://github.com/alshedivat/al-folio" target="_blank" rel="noopener noreferrer">al-folio</a> theme.
 
     
     
