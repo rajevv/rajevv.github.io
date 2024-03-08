@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rajeev Verma - PhD Student</title>
+    <title>Your Name - PhD Student</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,46 +13,56 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
 
         #container {
-            display: flex;
             max-width: 800px;
             margin: auto;
+            display: flex;
+            flex-wrap: wrap;
         }
 
         #photo {
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             margin-right: 20px;
             border-radius: 50%;
         }
 
-        #text {
-            flex-grow: 1;
+        /*#text {
+            flex-grow: 0.5;
+        }*/
+
+        h1,
+        p {
+            margin: 2;
+        }
+
+        /* Additional styling for other sections if needed */
+        h2 {
+            margin-top: 8px;
+        }
+
+        ul {
+            padding-left: 18px;
         }
     </style>
 </head>
 
 <body>
     <div id="container">
-        <img id="photo" src="prof_pic.jpg" alt="a picture of me">
+        <img id="photo" src="prof_pic.jpg" alt="Your Photo">
         <div id="text">
             <h1>About Me</h1>
             <p>I'm an <a href="https://ellis.eu/sites" target="_blank">ELLIS</a> PhD student at
                 <a href="https://amlab.science.uva.nl" target="_blank">AMLab</a> / 
                 <a href="https://ivi.fnwi.uva.nl/uvaboschdeltalab/" target="_blank">Delta Lab</a> supervised by
-                <a href="https://enalisnick.github.io" target="_blank">Eric Nalisnick</a>.
-            </p>
-
-            <p>Previously, I studied Electrical Engineering at the
+                <a href="https://enalisnick.github.io" target="_blank">Eric Nalisnick</a>.Previously, I studied Electrical Engineering at the
                 <a href="https://www.iitp.ac.in/index.php/en-us/" target="_blank">Indian Institute of Technology Patna (IITP)</a>
                 and Artificial Intelligence at the <a href="https://www.uva.nl" target="_blank">University of Amsterdam (UvA)</a>.
             </p>
-        </div>
-    </div>
-
+        
     <!-- Additional Info -->
     <p>
         <a href="mailto:rajeev.ee15@gmail.com">Email</a> | 
@@ -61,6 +71,8 @@
         <a href="https://twitter.com/RaajeevVerma">Twitter</a> | 
         <a href="https://www.linkedin.com/in/rajeevee15/">Linkedin</a>
     </p>
+</div>
+    
 
     <h2>Research Interests</h2>
     <p>My general research interests are in AI safety and responsible AI, aiming to build systems that are maximally useful
@@ -77,7 +89,7 @@
 
     <!-- Updated Publications Section -->
     <h2>Selected Publications</h2>
-    <p>* Denotes equal contribution.</p> <!-- Added line -->
+    <p>&emsp;(* Denotes equal contribution)</p> <!-- Added line -->
     <ul>
         <li>Dharmesh Tailor, Aditya Patra, <u>Rajeev Verma</u>, Putra Manggala, Eric Nalisnick.
             <br><a href="https://arxiv.org/abs/2403.02683" target="_blank">Learning to Defer to a Population: A Meta-Learning Approach</a>.
@@ -95,11 +107,13 @@
             <br><br>
         </li>  
     </ul>
+    
 
     <!-- Service Section -->
     <h2>Service</h2>
     <p>
         <strong>&emsp;Reviewer:</strong>
+        <br>
         <br>
         &emsp;ICML: 2023, 2024
         <br>
@@ -110,7 +124,16 @@
         &emsp;ICLR: 2023
         <br>
         &emsp;ACL ARR: 2024
+        <br>
+        <br>
+        <strong>&emsp;Teaching:</strong>
+        <br>
+        <br>
+        &emsp;<a href="https://enalisnick.github.io/human_ML.html" target="_blank">Human-in-the-Loop Machine Learning</a> (Teaching Assistant)
+        <br>
     </p>
+</div>
+
 </body>
 
 </html>
