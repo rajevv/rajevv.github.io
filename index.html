@@ -9,19 +9,18 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
+            padding: 10px;
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.425;
+            justify-content:  center;
             align-items: center;
             min-height: 100vh;
-            font-family: 'Open Sans', sans-serif;
+
         }
 
         #container {
             max-width: 800px;
             margin: auto;
-            display: flex;
-            flex-wrap: wrap;
         }
 
         #photo {
@@ -29,19 +28,28 @@
             height: 150px;
             margin-right: 20px;
             border-radius: 50%;
+            float: left;
         }
 
-        h1,
-        p {
-            margin: 2;
-        }
-
-        h2 {
+        h1, h2 {
             margin-top: 8px;
         }
 
         ul {
             padding-left: 18px;
+        }
+
+        ul li {
+            margin-bottom: 8px;
+        }
+
+        #contact-info a {
+            margin-right: 10px;
+        }
+
+        p {
+            margin-top: 10px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -49,105 +57,101 @@
 <body>
     <div id="container">
         <img id="photo" src="assets/prof_pic.jpg" alt="A photo of me">
-        <div id="text">
-            <h1>About Me</h1>
+        <div>
+            <h1>Rajeev Verma</h1>
             <p>I'm an <a href="https://ellis.eu/sites" target="_blank">ELLIS</a> PhD student at
-                <a href="https://amlab.science.uva.nl" target="_blank">AMLab</a> / 
+                <a href="https://amlab.science.uva.nl" target="_blank">AMLab</a> /
                 <a href="https://ivi.fnwi.uva.nl/uvaboschdeltalab/" target="_blank">Delta Lab</a> supervised by
-                <a href="https://enalisnick.github.io" target="_blank">Eric Nalisnick</a> and <a href="https://naesseth.github.io/" target="_blank">Christian A. Naesseth</a>. Previously, I studied Electrical Engineering at the
-                <a href="https://www.iitp.ac.in/" target="_blank">Indian Institute of Technology Patna (IITP)</a>
-                and Artificial Intelligence at the <a href="https://www.uva.nl" target="_blank">University of Amsterdam (UvA)</a>.
+                <a href="https://enalisnick.github.io" target="_blank">Eric Nalisnick</a> and 
+                <a href="https://naesseth.github.io/" target="_blank">Christian A. Naesseth</a>. Previously, I studied Electrical Engineering at the
+                <a href="https://www.iitp.ac.in/" target="_blank">Indian Institute of Technology Patna (IITP)</a> and Artificial Intelligence at the 
+                <a href="https://www.uva.nl" target="_blank">University of Amsterdam (UvA)</a>.
             </p>
-        
-    <!-- Contact Info Section -->
-    <p>
-        <a href="mailto:rajeev.ee15@gmail.com">Email</a> | 
-        <a href="https://scholar.google.com/citations?hl=en&user=xSgjaZYAAAAJ&view_op=list_works&sortby=pubdate">Google Scholar</a> | 
-        <a href="https://github.com/rajevv">Github</a> | 
-        <a href="https://twitter.com/RaajeevVerma">Twitter</a> | 
-        <a href="https://www.linkedin.com/in/rajeevee15/">Linkedin</a>
-    </p>
-</div>
-    
 
-    <h2>Research Interests</h2>
-    <p>My general research interests are in AI safety and responsible AI, aiming to build systems that are maximally useful
-        to society with provable guarantees. In my current research, I'm working at the intersection of uncertainty
-        quantification and decision making. I'm studying the calibration properties induced by minimizing generalized
-        risk measures as an aggregation mechanism. I'm also interested in safe statistics, imprecise probabilities, and possibility theory.</p>
+            <p id="contact-info">
+                <a href="mailto:rajeev.ee15@gmail.com">Email</a> | 
+                <a href="https://scholar.google.com/citations?hl=en&user=xSgjaZYAAAAJ&view_op=list_works&sortby=pubdate">Google Scholar</a> | 
+                <a href="https://github.com/rajevv">Github</a> | 
+                <a href="https://twitter.com/RaajeevVerma">Twitter</a> | 
+                <a href="https://www.linkedin.com/in/rajeevee15/">LinkedIn</a>
+            </p>
+        </div>
 
-    <p>Previously, I worked on studying the calibration properties of learning to defer (L2D) systems
-        [<a href="https://proceedings.mlr.press/v162/verma22c.html" target="_blank">ICML'22</a>], extending L2D systems
-        to allow for multiple experts [<a href="https://proceedings.mlr.press/v206/verma23a.html" target="_blank">AISTATS'23</a>],
-        and studying the out-of-distribution behavior of L2D systems (in preparation). I also collaborated on a project
-        on the test-time adaption of L2D to new experts
-        [<a href="https://arxiv.org/abs/2403.02683" target="_blank">AISTATS'24</a>].</p>
+        <h2>Research Interests</h2>
+        <p>My general research interests are in AI safety and responsible AI, aiming to build systems that are maximally useful
+            to society with provable guarantees. In my current research, I'm working at the intersection of uncertainty
+            quantification and decision making. I'm studying the calibration properties induced by minimizing generalized
+            risk measures as an aggregation mechanism. I'm also interested in safe statistics, imprecise probabilities, and possibility theory.
+        </p>
+        <p>Previously, I worked on studying the calibration properties of learning to defer (L2D) systems
+            [<a href="https://proceedings.mlr.press/v162/verma22c.html" target="_blank">ICML'22</a>], extending L2D systems
+            to allow for multiple experts [<a href="https://proceedings.mlr.press/v206/verma23a.html" target="_blank">AISTATS'23</a>],
+            and studying the out-of-distribution behavior of L2D systems (in preparation). I also collaborated on a project
+            on the test-time adaption of L2D to new experts
+            [<a href="https://arxiv.org/abs/2403.02683" target="_blank">AISTATS'24</a>].
+        </p>
 
-    <!-- Publications Section -->
-    <h2>Selected Publications</h2>
-    <p>&emsp;(* Denotes equal contribution)</p> <!-- Added line -->
-    <ul>
-        <li><u>Rajeev Verma</u>, Volker Fischer, Eric Nalisnick</u>.
-            <br><a href="https://arxiv.org/abs/2412.14142" target="_blank">On Calibration in Multi-Distribution Learning</a>.
-            <br>preprint</a>.
-            <br><br>
-        </li> 
-        <li><u>Rajeev Verma</u>, Volker Fischer, Eric Nalisnick</u>.
-            <br><a href="https://openreview.net/forum?id=qT4jMbgJGy" target="_blank">On the Calibration of Conditional-Value-at-Risk</a> <a href="assets/pdf/CVaR_and_Calibration_.pdf" target="_blank">[errata]</a>.
-            <br>In <a href="https://icml-nextgenaisafety.github.io/" target="_blank">ICML 2024 Workshop on Next Generation of AI Safety</a>.
-            <br><br>
-        </li> 
-        <li>Dharmesh Tailor, Aditya Patra, <u>Rajeev Verma</u>, Putra Manggala, Eric Nalisnick.
-            <br><a href="https://arxiv.org/abs/2403.02683" target="_blank">Learning to Defer to a Population: A Meta-Learning Approach</a>.
-            <br>In Twenty-seventh Conference on Artificial Intelligence and Statistics (AISTATS 2024).
-            <br> <span style="color:red"><i>[Oral, Student paper award (top 1%)]</i></span>.
-            <br><br>
-        </li>
-        <li><u>Rajeev Verma<sup>*</sup></u>, Daniel Barrejón<sup>*</sup>, Eric Nalisnick.
-            <br><a href="https://proceedings.mlr.press/v206/verma23a.html" target="_blank">Learning to Defer to Multiple Experts: Consistent Surrogate Losses, Confidence Calibration, and Conformal Ensembles</a>.
-            <br>In Twenty-sixth Conference on Artificial Intelligence and Statistics (AISTATS 2023).
-            <br> <i> Note:</i> Also appeared at the <a href="https://sites.google.com/view/icml-2022-hmcat/home" target="_blank">ICML 2022 Workshop on Human-Machine Collaboration and Teaming</a> </a>as <a href="https://dbarrejon.github.io/docs/ICML_HMCaT2022.pdf" target="_blank">On the Calibration of Learning to Defer to Multiple Experts.</a>
-            <br><br>
-        </li>
-        <li><u>Rajeev Verma</u>, Eric Nalisnick.
-            <br><a href="https://proceedings.mlr.press/v162/verma22c.html" target="_blank">Calibrated Learning to Defer with One-vs-All Classifiers</a>.
-            <br>In International Conference on Machine Learning (ICML 2022).
-            <br><br>
-        </li> 
-        <li><u>Rajeev Verma</u>.
-            <br><a href="assets/pdf/MScThesis.pdf" target="_blank">On the Calibration of Learning to Defer Systems</a>.
-            <br>Master's Thesis 2022 (UvA).
-            <br><br>
-        </li> 
-    
+        <h2>Blog</h2>
+        <ul>
+            <li>
+                <a href="https://decisive-bun-09e.notion.site/No-sure-loss-calibration-and-insurance-174ef9bcc1598012b37bd647c2fb879e" target="_blank">
+                    No sure loss, calibration, and insurance
+                </a>.
+            </li>
+        </ul>
 
-    <!-- Service Section -->
-    <h2>Service</h2>
-    <p>
-        <strong>&emsp;Reviewer:</strong>
-        <br>
-        <br>
-        &emsp;ICML: 2023, 2024
-        <br>
-        &emsp;NeurIPS: 2023 <span style="color:red"><i>(Top reviewer)</i></span>
-        <br>
-        &emsp;UAI: 2024
-        <br>
-        &emsp;ICLR: 2023
-        <br>
-        &emsp;ACL ARR: 2024
-        <br>
-        <br>
-        <strong>&emsp;Teaching:</strong>
-        <br>
-        <br>
-        &emsp;<a href="https://enalisnick.github.io/human_ML.html" target="_blank">Human-in-the-Loop Machine Learning</a> (Teaching Assistant)
-        <br>
-        &emsp;<a href="https://uvadl2c.github.io/" target="_blank">Deep Learning 2</a> (Teaching Assistant)
-        <br>
-    </p>
-</div>
+        <h2>Selected Publications</h2>
+        <p><em>(* Denotes equal contribution)</em></p>
+        <ul>
+            <li><u>Rajeev Verma</u>, Volker Fischer, Eric Nalisnick</u>.
+                <br><a href="https://arxiv.org/abs/2412.14142" target="_blank">On Calibration in Multi-Distribution Learning</a>.
+                <br>preprint</a>.
+                <br><br>
+            </li> 
+            <li><u>Rajeev Verma</u>, Volker Fischer, Eric Nalisnick</u>.
+                <br><a href="https://openreview.net/forum?id=qT4jMbgJGy" target="_blank">On the Calibration of Conditional-Value-at-Risk</a> <a href="assets/pdf/CVaR_and_Calibration_.pdf" target="_blank">[errata]</a>.
+                <br>In <a href="https://icml-nextgenaisafety.github.io/" target="_blank">ICML 2024 Workshop on Next Generation of AI Safety</a>.
+                <br><br>
+            </li> 
+            <li>Dharmesh Tailor, Aditya Patra, <u>Rajeev Verma</u>, Putra Manggala, Eric Nalisnick.
+                <br><a href="https://arxiv.org/abs/2403.02683" target="_blank">Learning to Defer to a Population: A Meta-Learning Approach</a>.
+                <br>In Twenty-seventh Conference on Artificial Intelligence and Statistics (AISTATS 2024).
+                <br> <span style="color:red"><i>[Oral, Student paper award (top 1%)]</i></span>.
+                <br><br>
+            </li>
+            <li><u>Rajeev Verma<sup>*</sup></u>, Daniel Barrejón<sup>*</sup>, Eric Nalisnick.
+                <br><a href="https://proceedings.mlr.press/v206/verma23a.html" target="_blank">Learning to Defer to Multiple Experts: Consistent Surrogate Losses, Confidence Calibration, and Conformal Ensembles</a>.
+                <br>In Twenty-sixth Conference on Artificial Intelligence and Statistics (AISTATS 2023).
+                <br> <i> Note:</i> Also appeared at the <a href="https://sites.google.com/view/icml-2022-hmcat/home" target="_blank">ICML 2022 Workshop on Human-Machine Collaboration and Teaming</a> </a>as <a href="https://dbarrejon.github.io/docs/ICML_HMCaT2022.pdf" target="_blank">On the Calibration of Learning to Defer to Multiple Experts.</a>
+                <br><br>
+            </li>
+            <li><u>Rajeev Verma</u>, Eric Nalisnick.
+                <br><a href="https://proceedings.mlr.press/v162/verma22c.html" target="_blank">Calibrated Learning to Defer with One-vs-All Classifiers</a>.
+                <br>In International Conference on Machine Learning (ICML 2022).
+                <br><br>
+            </li> 
+            <li><u>Rajeev Verma</u>.
+                <br><a href="assets/pdf/MScThesis.pdf" target="_blank">On the Calibration of Learning to Defer Systems</a>.
+                <br>Master's Thesis 2022 (UvA).
+                <br><br>
+            </li> 
+        </ul>
 
+        <h2>Service</h2>
+        <p>
+            <strong>Reviewer:</strong><br>
+            &emsp;ICML: 2023, 2024<br>
+            &emsp;NeurIPS: 2023 <span style="color:red;"><i>(Top reviewer)</i></span><br>
+            &emsp;UAI: 2024<br>
+            &emsp;ICLR: 2023<br>
+            &emsp;ACL ARR: 2024
+        </p>
+        <p>
+            <strong>Teaching:</strong><br>
+            &emsp;<a href="https://enalisnick.github.io/human_ML.html" target="_blank">Human-in-the-Loop Machine Learning</a> (Teaching Assistant)<br>
+            &emsp;<a href="https://uvadl2c.github.io/" target="_blank">Deep Learning 2</a> (Teaching Assistant)
+        </p>
+    </div>
 </body>
 
 </html>
