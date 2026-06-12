@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sliding Bump Function</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #020617; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const WIDTH = 700;
+    const HEIGHT = 320;
+    const PAD = { top: 40, right: 40, bottom: 60, left: 60 };
+
+    function toCanvas(x, y, xMin, xMax, yMin, yMax) {
+      const cx = PAD.left + ((x - xMin) / (xMax - xMin)) * (WIDTH - PAD.left - PAD.right);
+      const cy = PAD.top + ((yMax - y) / (yMax - yMin)) * (HEIGHT - PAD.top - PAD.bottom);
+      return [cx, cy];
+    }
+
+    function SlidingBump() {
+      const [n, setN] = useState(0);
+      const [playing, setPlaying] = useState(false);
+      const intervalRef = useRef(null);
+      const canvasRef = useRef(null);
+      const MAX_N = 8;
+
+      useEffect(() => {
+        if (playing) {
+          intervalRef.current = setInterval(() => {
+            setN(prev => {
+              if (prev >= MAX_N) { setPlaying(false); return prev; }
+              return prev + 1;
+            });
+          }, 800);
+        } else {
+          clearInterval(intervalRef.current);
+        }
+        return () => clearInterval(intervalRef.current);
+      }, [playing]);
+
+      useEffect(() => {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+        const xMin = -1, xMax = 11, yMin = -0.3, yMax = 1.6;
+
+        // Grid lines
+        ctx.strokeStyle = "#1e293b";
+        ctx.lineWidth = 1;
+        for (let gx = 0; gx <= 10; gx++) {
+          const [cx] = toCanvas(gx, 0, xMin, xMax, yMin, yMax);
+          ctx.beginPath();
+          ctx.moveTo(cx, PAD.top);
+          ctx.lineTo(cx, HEIGHT - PAD.bottom);
+          ctx.stroke();
+        }
+        for (let gy = 0; gy <= 1; gy += 0.5) {
+          const [, cy] = toCanvas(0, gy, xMin, xMax, yMin, yMax);
+          ctx.beginPath();
+          ctx.moveTo(PAD.left, cy);
+          ctx.lineTo(WIDTH - PAD.right, cy);
+          ctx.stroke();
+        }
+
+        // Ghost bumps
+        for (let k = 0; k < n; k++) {
+          const alpha = 0.04 + 0.02 * (k / Math.max(n, 1));
+          ctx.fillStyle = `rgba(100,180,255,${alpha})`;
+          const [x0] = toCanvas(k, 0, xMin, xMax, yMin, yMax);
+          const [x1] = toCanvas(k + 1, 0, xMin, xMax, yMin, yMax);
+          const [, y1] = toCanvas(0, 1, xMin, xMax, yMin, yMax);
+          const [, y0] = toCanvas(0, 0, xMin, xMax, yMin, yMax);
+          ctx.fillRect(x0, y1, x1 - x0, y0 - y1);
+        }
+
+        // Axes
+        ctx.strokeStyle = "#94a3b8";
+        ctx.lineWidth = 1.5;
+        const [ax0] = toCanvas(xMin, 0, xMin, xMax, yMin, yMax);
+        const [ax1] = toCanvas(xMax, 0, xMin, xMax, yMin, yMax);
+        const [, ay0] = toCanvas(0, 0, xMin, xMax, yMin, yMax);
+        ctx.beginPath(); ctx.moveTo(ax0, ay0); ctx.lineTo(ax1, ay0); ctx.stroke();
+        const [axy] = toCanvas(0, yMin, xMin, xMax, yMin, yMax);
+        const [, axy2] = toCanvas(0, yMax, xMin, xMax, yMin, yMax);
+        ctx.beginPath(); ctx.moveTo(axy, axy2); ctx.lineTo(axy, HEIGHT - PAD.bottom); ctx.stroke();
+
+        // Axis labels
+        ctx.fillStyle = "#64748b";
+        ctx.font = "12px 'JetBrains Mono', monospace";
+        ctx.textAlign = "center";
+        for (let gx = 0; gx <= 10; gx++) {
+          const [cx, cy] = toCanvas(gx, 0, xMin, xMax, yMin, yMax);
+          ctx.fillText(gx, cx, cy + 18);
+        }
+        ctx.textAlign = "right";
+        ctx.fillText("0", axy - 6, ay0 + 4);
+        ctx.fillText("1", axy - 6, toCanvas(0, 1, xMin, xMax, yMin, yMax)[1] + 4);
+
+        // Main bump — glow
+        const bumpX0 = n, bumpX1 = n + 1;
+        const [bx0] = toCanvas(bumpX0, 0, xMin, xMax, yMin, yMax);
+        const [bx1] = toCanvas(bumpX1, 0, xMin, xMax, yMin, yMax);
+        const [, by1] = toCanvas(0, 1, xMin, xMax, yMin, yMax);
+        const [, by0] = toCanvas(0, 0, xMin, xMax, yMin, yMax);
+
+        const grad = ctx.createLinearGradient(bx0, by1, bx0, by0);
+        grad.addColorStop(0, "rgba(56,189,248,0.85)");
+        grad.addColorStop(1, "rgba(56,189,248,0.12)");
+        ctx.fillStyle = grad;
+        ctx.fillRect(bx0, by1, bx1 - bx0, by0 - by1);
+
+        // Bump border
+        ctx.strokeStyle = "#38bdf8";
+        ctx.lineWidth = 2.5;
+        ctx.shadowColor = "#38bdf8";
+        ctx.shadowBlur = 12;
+        ctx.beginPath();
+        ctx.moveTo(bx0, by0);
+        ctx.lineTo(bx0, by1);
+        ctx.lineTo(bx1, by1);
+        ctx.lineTo(bx1, by0);
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // Zero line (f=0 outside)
+        ctx.strokeStyle = "#38bdf8";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(PAD.left, ay0);
+        ctx.lineTo(bx0, ay0);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(bx1, ay0);
+        ctx.lineTo(WIDTH - PAD.right, ay0);
+        ctx.stroke();
+
+        // Endpoint dots
+        ctx.fillStyle = "#38bdf8";
+        ctx.shadowColor = "#38bdf8"; ctx.shadowBlur = 8;
+        [[bx0, by1], [bx1, by1]].forEach(([cx, cy]) => {
+          ctx.beginPath(); ctx.arc(cx, cy, 4, 0, 2 * Math.PI); ctx.fill();
+        });
+        ctx.shadowBlur = 0;
+
+        // n label above bump
+        ctx.fillStyle = "#f0f9ff";
+        ctx.font = "bold 14px 'JetBrains Mono', monospace";
+        ctx.textAlign = "center";
+        ctx.fillText(`[${n}, ${n+1}]`, (bx0 + bx1) / 2, by1 - 12);
+
+      }, [n]);
+
+      return (
+        <div style={{
+          minHeight: "100vh",
+          background: "#020617",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+          padding: "32px 16px",
+        }}>
+          <style>{`@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');`}</style>
+
+          <div style={{ marginBottom: 8, color: "#94a3b8", fontSize: 13, letterSpacing: "0.08em" }}>
+            SLIDING BUMP FUNCTION
+          </div>
+          <div style={{
+            fontSize: 22,
+            color: "#e2e8f0",
+            marginBottom: 28,
+            letterSpacing: "-0.01em"
+          }}>
+            <span style={{ color: "#38bdf8", fontWeight: 700 }}>f</span>
+            <sub style={{ fontSize: 14, color: "#7dd3fc" }}>n</sub>
+            <span style={{ color: "#94a3b8" }}> = </span>
+            <span style={{ color: "#e2e8f0" }}>𝟏</span>
+            <sub style={{ fontSize: 12, color: "#7dd3fc" }}>[n, n+1]</sub>
+            <span style={{ color: "#94a3b8", fontSize: 14, marginLeft: 16 }}>
+              n = <span style={{ color: "#38bdf8" }}>{n}</span>
+            </span>
+          </div>
+
+          <div style={{
+            background: "#0f172a",
+            borderRadius: 16,
+            border: "1px solid #1e293b",
+            padding: "8px",
+            boxShadow: "0 0 60px rgba(56,189,248,0.07)",
+            marginBottom: 28,
+          }}>
+            <canvas ref={canvasRef} width={WIDTH} height={HEIGHT} style={{ display: "block" }} />
+          </div>
+
+          <div style={{ display: "flex", gap: 16, alignItems: "center", flexWrap: "wrap", justifyContent: "center" }}>
+            <input
+              type="range" min={0} max={MAX_N} value={n}
+              onChange={e => { setPlaying(false); setN(Number(e.target.value)); }}
+              style={{ width: 220, accentColor: "#38bdf8", cursor: "pointer" }}
+            />
+            <button
+              onClick={() => { if (n >= MAX_N) setN(0); setPlaying(p => !p); }}
+              style={{
+                background: playing ? "#1e3a5f" : "#0c4a6e",
+                color: "#38bdf8",
+                border: "1px solid #38bdf8",
+                borderRadius: 8,
+                padding: "8px 20px",
+                fontFamily: "inherit",
+                fontSize: 13,
+                cursor: "pointer",
+                letterSpacing: "0.06em",
+              }}
+            >
+              {playing ? "⏸ PAUSE" : n >= MAX_N ? "↺ RESTART" : "▶ ANIMATE"}
+            </button>
+            <button
+              onClick={() => { setPlaying(false); setN(0); }}
+              style={{
+                background: "transparent",
+                color: "#64748b",
+                border: "1px solid #334155",
+                borderRadius: 8,
+                padding: "8px 20px",
+                fontFamily: "inherit",
+                fontSize: 13,
+                cursor: "pointer",
+                letterSpacing: "0.06em",
+              }}
+            >
+              RESET
+            </button>
+          </div>
+
+          <div style={{
+            marginTop: 28, maxWidth: 560, textAlign: "center",
+            color: "#475569", fontSize: 12, lineHeight: 1.8, letterSpacing: "0.02em"
+          }}>
+            For each fixed <span style={{ color: "#7dd3fc" }}>x</span>, f<sub>n</sub>(x) → 0 as n → ∞,
+            yet{" "}<span style={{ color: "#7dd3fc" }}>∫ f<sub>n</sub> dx = 1</span> for all n.
+            The mass never vanishes — it just slides out of view.
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<SlidingBump />);
+  </script>
+</body>
+</html>

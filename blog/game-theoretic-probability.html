@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game-Theoretic Probability and the Emergence of Probability</title>
+
+    <!-- MathJax -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --cream:   #faf7f1;
+            --ink:     #1e1a14;
+            --muted:   #6b5e4e;
+            --gold:    #b07d3a;
+            --ocean:   #2d5f8a;
+            --rule:    #d9cfc2;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            font-family: 'Lora', Georgia, serif;
+            font-size: 1.08rem;
+            line-height: 1.85;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 28px 80px;
+            color: var(--ink);
+            background: var(--cream);
+        }
+
+        /* ── Navigation ── */
+        .back-link {
+            display: inline-block;
+            font-family: 'Lora', serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            margin-bottom: 3em;
+        }
+        .back-link:hover { color: var(--gold); }
+
+        /* ── Header ── */
+        .post-header {
+            margin-bottom: 2em;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.15;
+            margin: 0 0 0.4em;
+            color: var(--ink);
+        }
+
+        .byline {
+            font-family: 'Lora', serif;
+            font-size: 0.88rem;
+            font-style: italic;
+            color: var(--muted);
+            letter-spacing: 0.03em;
+        }
+
+        /* ── WIP banner ── */
+        .wip-banner {
+            display: inline-block;
+            margin: 1.6em 0 2em;
+            font-size: 0.82rem;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            border-radius: 2px;
+            padding: 5px 12px;
+        }
+
+        /* ── Hero image ── */
+        .hero-figure {
+            margin: 0 0 3em;
+        }
+
+        .hero-figure img {
+            width: 100%;
+            height: 420px;
+            object-fit: cover;
+            object-position: center 100%;
+            display: block;
+            border-radius: 3px;
+        }
+
+        .hero-figure figcaption {
+            margin-top: 0.7em;
+            font-size: 0.8rem;
+            font-style: italic;
+            color: var(--muted);
+            text-align: right;
+            letter-spacing: 0.02em;
+        }
+
+        /* ── Body text ── */
+        p {
+            margin: 0 0 1.4em;
+        }
+
+        /* Drop cap on the very first paragraph */
+        .opening-para::first-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8em;
+            font-weight: 600;
+            float: left;
+            line-height: 0.78;
+            margin: 0.07em 0.1em 0 0;
+            color: var(--gold);
+        }
+
+        em { font-style: italic; }
+
+        strong {
+            font-weight: 600;
+            color: var(--ink);
+        }
+
+        a {
+            color: var(--ocean);
+            text-decoration: underline;
+            text-decoration-color: rgba(45, 95, 138, 0.35);
+            text-underline-offset: 3px;
+        }
+        a:hover {
+            text-decoration-color: var(--ocean);
+        }
+
+        /* ── Section headings ── */
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            font-style: italic;
+            color: var(--ink);
+            margin: 3em 0 0.9em;
+            padding: 0;
+            border: none;
+        }
+
+        h2::before {
+            content: '§';
+            color: var(--gold);
+            margin-right: 0.45em;
+            font-style: normal;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--muted);
+            margin: 2.2em 0 0.7em;
+        }
+
+        /* ── Ornamental rule ── */
+        .ornament {
+            text-align: center;
+            color: var(--gold);
+            font-size: 1.1rem;
+            letter-spacing: 0.5em;
+            margin: 3em 0;
+            user-select: none;
+        }
+
+        /* ── Math ── */
+        .math-block {
+            overflow-x: auto;
+            margin: 1.8em 1em;
+            text-align: center;
+            color: var(--ink);
+        }
+
+        /* ── Game protocol box ── */
+        .game-protocol {
+            list-style: none;
+            margin: 1.5em 0;
+            padding: 1.4em 1.8em;
+            background: rgba(45, 95, 138, 0.05);
+            border-left: 3px solid var(--ocean);
+            border-radius: 2px;
+            font-size: 0.97em;
+        }
+
+        .game-protocol li {
+            margin: 0.5em 0;
+            color: var(--ink);
+        }
+
+        /* ── End note ── */
+        .end-note {
+            margin-top: 1em;
+            font-size: 0.85rem;
+            font-style: italic;
+            color: var(--muted);
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid var(--rule);
+            margin: 3.5em 0 2em;
+        }
+    </style>
+</head>
+<body>
+
+    <a class="back-link" href="../index.html">← home</a>
+
+    <div class="post-header">
+        <h1>Game-Theoretic Probability and the Emergence of Probability</h1>
+        <p class="byline">Rajeev Verma</p>
+        <div class="wip-banner">Work in progress</div>
+    </div>
+
+    <figure class="hero-figure">
+        <img src="../assets/im.jpeg" alt="Copacabana beach, Rio de Janeiro">
+        <figcaption>Rio de Janeiro.</figcaption>
+    </figure>
+
+    <p class="opening-para">
+        I've spent nearly the whole of my PhD understanding "probability," and these have been some of the most
+        intellectually rich years I've lived. But despite my best attempts to not engage with the philosophical
+        question of what is probability, my body goes into an anxiety mode as soon as I read or hear someone use
+        the term "probability", "uncertainty", "random", etc. So I have to do the work of culling this anxiety,
+        and I believe the game-theoretic way of understanding probability helps me a bit. In this note, I'll try
+        to reason why that is.
+    </p>
+
+    <p>
+        It is argued that if one wants to do probability rigorously, it has to be done measure-theoretically.
+        And granted, the measure-theoretic way of doing probability is something that one needs to experience
+        at least once. But the reason it became the standard framework is that it abstracted away the word
+        "probability" into measure, without really pinning out what it is and what meaning it carries in the
+        real world. One does not deal with the philosophical question of what probability <em>is</em> when
+        working measure-theoretically. It is an axiomatic framework that gives rigorous calculus for
+        probabilistic reasoning — once one has already committed to a meaning. But probabilistic reasoning is
+        a commonplace affair, partly due to the under-determinism imposed by quantum mechanics onto Newtonian
+        determinism. Some things cannot be known exactly, and so the words go together: things are uncertain,
+        things are random, and probability theory allows one to reason with under-determinism rigorously.
+        The probability of raining tomorrow is \(70\%\), we say.
+    </p>
+
+    <p>
+        <em>Random, uncertain, probable.</em> My confusion and anxiety emerges from the blatant conflation of
+        everything happening in that sentence. What I've really started to like and appreciate about
+        mathematics now is how much care it takes to find good and unambiguous definitions for basic things.
+        But measure-theoretic probability theory, as far as I can get it, never defines these terminologies —
+        yet they go together colloquially, and that is the source of the confusion.
+    </p>
+
+    <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+    <h2>A Brief Overview of Measure-Theoretic Probability</h2>
+
+    <p>
+        Measure theory starts with what is referred to as a measure space \((\Omega, \mathcal{F}, \mathbb{P})\).
+        \(\Omega\) is the sample space: for a coin flip it is \(\{H, T\}\), and for two consecutive flips it is
+        \(\{HH, HT, TH, TT\}\). \(\mathcal{F}\) is the \(\sigma\)-algebra — it consists of all the possible
+        inquiries one can make of the experiment, for instance "at least one head" \(\{HH, HT, TH\}\) or
+        "no tails" \(\{HH\}\). And \(\mathbb{P}\) is the probability measure, which assigns a number to each
+        event: \(\mathbb{P}\left(\{HH, HT, TH\}\right) = \alpha\). So there is \(\alpha \in [0,1]\) probability
+        mass assigned to the event "at least one heads." But how should one read this statement? Is the
+        occurrence of at least one heads <em>random</em>? Is it <em>uncertain</em>, with \(\alpha\)
+        quantifying that randomness or uncertainty?
+    </p>
+
+    <p>
+        Randomness as a word evokes the feeling that it is a property of the experiment — by extrapolation,
+        a property of the world. Uncertainty implies it is a property of the particular observer and their
+        experimental design. Randomness lives in the world; uncertainty manifests in who is observing the
+        world. Neither probability theory nor its measure-theoretic presentation ever makes this distinction.
+        But we need to, or at least to be aware that a distinction exists — that is what mathematics is for.
+        I reckon the <a href="https://probabilityandfinance.com/2001_book/index.html">framework of
+        game-theoretic probability as pioneered by Glenn Shafer and Vladimir Vovk</a>, building on the work
+        of <a href="https://en.wikipedia.org/wiki/Bruno_de_Finetti">Bruno De Finetti</a> and
+        <a href="https://en.wikipedia.org/wiki/Jean_Ville">Jean Ville</a>, provides the necessary resolution —
+        or at least side-steps the whole distinction more gracefully than measure-theory does.
+        <em>The key fact I'll base the rest of this note on is that in the game-theoretic framework,
+        probability does not need to be defined — it emerges from the setup.</em>
+        And this statement does most of the heavy-lifting to cull my anxiety.
+    </p>
+
+    <div class="ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+
+    <h2>The Setup of Game-Theoretic Probability</h2>
+
+    <p>
+        There is an experimenter trying to understand the world. The experimenter could be a scientist aiming
+        to understand coastal tides — an independent phenomenon manifesting in the world entirely beyond their
+        control. They can collect data, theorise, and come up with some understanding of its occurrence. Such
+        a theory is said to be good if its predictions are consistent with the tides' actual behaviour. The
+        game-theoretic framework is rooted exactly in this idea — observing a phenomenon, collecting data to
+        explain it, and producing explanations that stay true to the phenomenon. Except it uses the word
+        <strong>Sceptic</strong> for the experimenter, and <strong>World</strong> for the phenomenon of
+        interest.
+    </p>
+
+    <p>
+        For simplicity, consider data for tide (1) or no tide (0) on consecutive days:
+        \(y_1, y_2, y_3, \ldots\) with \(y_t \in \{0,1\}\). Let \(\Omega\) be all possible such sequences —
+        the same sample space as before. Define a function \(x: \Omega \rightarrow \mathbb{R}\), called the
+        <em>variable</em>, which plays the role of the random variable. It represents one possible query the
+        Sceptic wishes to ask about the world. For instance, \(x = \mathbf{1}_{E}\) where
+        \(E = \{0,1,0,1,\ldots;\; 1,0,1,0,\ldots\}\) asks whether the tide alternates every day. The
+        question then becomes: when can the Sceptic be said to truly understand the World?
+    </p>
+
+    <h3>The Betting Formulation</h3>
+
+    <p>
+        Here comes what I would call the elegant move of this framework, borrowed from early developments in
+        probability in betting games, from De Finetti, and from finance. Imagine the Sceptic selling the
+        variable \(x\) to some opponent — what price can they charge? Posed differently: imagine owning a
+        black-box with a reward inside that you cannot see, but about which you have a hypothesis. An opponent
+        wants to buy the box, and you must commit to paying them whatever is inside. What price would you
+        charge so that the transaction doesn't put you at a loss? The variable \(x\) is precisely that
+        black-box — its value is dictated by the World \(\xi \in \Omega\), out of the Sceptic's control.
+    </p>
+
+    <p>
+        The answer is obvious at one extreme. With no understanding whatsoever, the safe price is
+        \(\sup_{\xi \in \Omega} x\!\left(\xi\right)\). But the Sceptic is not merely selling the black-box —
+        they are also staking a claim to understanding the World. This is the second elegant move. The Sceptic
+        embodies their understanding through a betting strategy \(\mathcal{P}\), which formalises the claim
+        that they can predict what the World will do next. This leads to the following protocol:
+    </p>
+
+    <ul class="game-protocol">
+        <li>Sceptic starts with initial wealth \(K_0\) and strategy \(\mathcal{P}\).</li>
+        <li><strong>for</strong> \(\;t = 1, 2, 3, \ldots\)</li>
+        <li style="padding-left:1.4em;">Sceptic places stake \(m_t\) according to \(\mathcal{P}\)</li>
+        <li style="padding-left:1.4em;">World reveals \(y_t\)</li>
+        <li style="padding-left:1.4em;">Capital updates: \(\;K^{\mathcal{P}}_t = K^{\mathcal{P}}_{t-1} + m_t \cdot y_t\)</li>
+    </ul>
+
+    <p>
+        If the strategy aligns with the World's moves, the Sceptic accumulates wealth. Once the World has
+        revealed the complete path \(\xi\), the final capital is \(K^{\mathcal{P}}(\xi)\). For \(\mathcal{P}\)
+        to be a good strategy, the Sceptic needs to ensure:
+    </p>
+
+    <div class="math-block">
+        \[
+            K^{\mathcal{P}}(\xi) \;\geq\; x\!\left(\xi\right) - \alpha, \qquad \forall\, \xi \in \Omega.
+        \]
+    </div>
+
+    <p>
+        Let's unpack this. When the Sceptic commits to sell \(x\) for price \(\alpha\), they commit to paying
+        \(x(\xi)\) for every possible realisation \(\xi\). The expression above says that, using strategy
+        \(\mathcal{P}\), the Sceptic can generate enough capital that the commitment goes through for
+        <em>any</em> \(\xi\). Hence \(\alpha\) is the price they need to charge. The better their
+        understanding of the World — the better the strategy — the lower the price they can offer, since their
+        capital does more of the covering. It is from this competitive pricing, from this narrowing of what
+        the World might do, that probability emerges.
+    </p>
+
+    <hr>
+    <p class="end-note">&#9998;&ensp;The note continues here — to be completed.</p>
+
+</body>
+</html>
