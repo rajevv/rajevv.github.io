@@ -10,6 +10,7 @@
   <meta name="description" content="Rajeev Verma is an ELLIS PhD student at AMLab/Delta Lab (University of Amsterdam). Research interests include bridging prediction and decision-making, calibration, safe statistics, imprecise probabilities, and possibility theory." />
   <link rel="canonical" href="https://rajevv.github.io/" />
   <meta name="robots" content="index,follow" />
+  <meta name="theme-color" content="#ffffff" />
 
   <!-- Open Graph (LinkedIn, etc.) -->
   <meta property="og:type" content="website" />
@@ -47,76 +48,157 @@
   }
   </script>
 
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" />
-
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
     }
 
+    :root {
+      --link: #7a7a7a;
+      --link-hover: #111;
+      --text: #1c1c1c;
+      --muted: #6b6b6b;
+      --rule: #e4e4e4;
+      --mono: 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Inter', sans-serif;
-      font-size: 15.5px;
-      line-height: 1.65;
-      color: #1a1a1a;
-      background: #fafaf8;
-      border-top: 3px solid #4f46e5;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--text);
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection {
+      background: #fceecb;
     }
 
     #container {
       max-width: 760px;
       margin: 0 auto;
-      padding: 48px 24px 80px;
+      padding: 28px 22px 80px;
     }
 
-    /* ── Header ── */
+    /* ── Top navigation ── */
+    nav.site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 0;
+      align-items: baseline;
+      padding-bottom: 14px;
+      margin-bottom: 34px;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 0.9rem;
+    }
+
+    nav.site-nav a {
+      color: var(--link);
+      padding: 0 12px;
+      border-right: 1px solid var(--rule);
+      text-decoration: none;
+    }
+
+    nav.site-nav a:hover {
+      color: var(--link-hover);
+    }
+
+    nav.site-nav a:first-child {
+      padding-left: 0;
+    }
+
+    nav.site-nav a:last-child {
+      border-right: none;
+    }
+
+    /* ── Header / intro ── */
     header {
       display: flex;
       align-items: flex-start;
-      gap: 28px;
-      margin-bottom: 40px;
+      gap: 30px;
+      margin-bottom: 8px;
+    }
+
+    .intro {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .intro > p:last-child {
+      margin-bottom: 0;
+    }
+
+    .photo-col {
+      flex-shrink: 0;
+      width: 175px;
+      margin-top: 72px;
     }
 
     #photo {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      object-fit: cover;
-      flex-shrink: 0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+      width: 175px;
+      height: auto;
+      display: block;
+      border-radius: 2px;
+      border: 1px solid #ececec;
     }
 
-    .header-text {
-      padding-top: 4px;
+    .photo-tag {
+      margin: 12px 0 0;
+      font-size: 0.84rem;
+      line-height: 1.45;
+      color: var(--muted);
+      font-style: italic;
+      text-align: center;
     }
 
     h1 {
-      margin: 0 0 10px;
-      font-size: 1.6rem;
-      font-weight: 600;
-      letter-spacing: -0.02em;
+      margin: 0 0 6px;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
     }
 
-    h2 {
-      margin: 0 0 10px;
-      font-size: 1.0rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: #4f46e5;
+    .contact-line {
+      margin: 0 0 22px;
+      font-family: var(--mono);
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+
+    .contact-line a {
+      color: var(--link);
+    }
+
+    .contact-line span.sep {
+      color: #c4c4c4;
+      padding: 0 7px;
     }
 
     /* ── Sections ── */
     section {
-      margin-top: 36px;
-      padding-top: 28px;
-      border-top: 1px solid #e8e8e4;
+      margin-top: 34px;
+      clear: none;
     }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    h2::before { content: "["; color: var(--muted); font-weight: 400; margin-right: 1px; }
+    h2::after  { content: "]"; color: var(--muted); font-weight: 400; margin-left: 1px; }
 
     p {
       margin: 0 0 16px;
@@ -124,36 +206,33 @@
 
     /* ── Links ── */
     a {
-      color: #4f46e5;
-      text-decoration: none;
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: #cfcfcf;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
     }
 
     a:hover {
-      text-decoration: underline;
+      color: var(--link-hover);
+      text-decoration-color: currentColor;
     }
 
-    /* ── Contact nav ── */
-    #contact-info {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 0;
-      margin-top: 12px;
-      font-size: 0.875rem;
+    a:focus-visible {
+      outline: 2px solid #d8c89c;
+      outline-offset: 2px;
+      border-radius: 2px;
     }
 
-    #contact-info a {
-      color: #555;
-      padding: 2px 10px;
-      border: 1px solid #d0d0cc;
-      border-radius: 20px;
-      margin-right: 6px;
-      transition: border-color 0.15s, color 0.15s;
+    /* Anchored sections land with breathing room */
+    header[id], section[id] {
+      scroll-margin-top: 28px;
     }
 
-    #contact-info a:hover {
-      color: #4f46e5;
-      border-color: #4f46e5;
-      text-decoration: none;
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      a, nav.site-nav a, ul.pub-list li, #photo { transition: none; }
     }
 
     /* ── Publication list ── */
@@ -163,42 +242,74 @@
       margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 24px;
     }
 
     ul.pub-list li {
-      line-height: 1.6;
-      padding-left: 14px;
-      border-left: 2px solid #e0dff8;
-      transition: border-color 0.15s;
+      line-height: 1.5;
+      padding-left: 16px;
+      border-left: 2px solid #ececec;
+      transition: border-color 0.15s ease;
     }
 
     ul.pub-list li:hover {
-      border-left-color: #4f46e5;
+      border-left-color: #c9c9c9;
+    }
+
+    .pub-title {
+      display: block;
+      font-weight: 700;
+      color: #1c1c1c;
+      font-size: 1.01rem;
+      margin: 2px 0 3px;
+      text-decoration-color: #bdbdbd;
+    }
+
+    .pub-title:hover {
+      color: #000;
+    }
+
+    .pub-authors {
+      display: block;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .pub-venue {
+      display: block;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .pub-note {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.9rem;
     }
 
     /* ── Regular lists (blog) ── */
     ul.plain-list {
-      padding-left: 18px;
+      padding-left: 20px;
       margin: 0;
     }
 
     ul.plain-list li {
-      margin-bottom: 8px;
+      margin-bottom: 12px;
     }
 
     /* ── Publication sub-headings ── */
     .pub-subhead {
-      margin: 24px 0 10px;
+      margin: 26px 0 12px;
       font-size: 0.78rem;
-      font-weight: 600;
+      font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: #888;
+      color: var(--muted);
     }
 
     .pub-subhead:first-of-type {
-      margin-top: 8px;
+      margin-top: 4px;
     }
 
     /* ── Award badge ── */
@@ -226,20 +337,49 @@
       font-style: italic;
     }
 
+    footer {
+      margin-top: 56px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: underline;
+    }
+
     /* ── Mobile ── */
-    @media (max-width: 520px) {
+    @media (max-width: 540px) {
       header {
         flex-direction: column;
         align-items: center;
         text-align: center;
+        gap: 0;
       }
 
-      #contact-info {
-        justify-content: center;
+      .photo-col {
+        order: -1;
+        width: auto;
+        margin: 0 auto 20px;
+      }
+
+      #photo {
+        margin: 0 auto;
+        width: 150px;
       }
 
       h1 {
-        font-size: 1.35rem;
+        font-size: 1.7rem;
+      }
+
+      .contact-line {
+        text-align: center;
+      }
+
+      nav.site-nav {
+        justify-content: center;
       }
     }
   </style>
@@ -247,40 +387,49 @@
 
 <body>
   <main id="container">
-    <header>
-      <img id="photo" src="assets/prof_pic.jpg" alt="Portrait photo of Rajeev Verma" loading="lazy" />
+    <nav class="site-nav" aria-label="Site navigation">
+      <a href="#top">Home</a>
+      <a href="#publications">Publications</a>
+      <a href="assets/pdf/CV_updated.pdf">CV</a>
+      <a href="#blog">Blog</a>
+      <a href="#service">Service</a>
+      <a href="https://scholar.google.com/citations?hl=en&user=xSgjaZYAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener noreferrer">Scholar</a>
+    </nav>
 
-      <div class="header-text">
-        <h1>Rajeev Verma</h1>
-        <p>
-          I'm a <a href="https://ellis.eu/sites" target="_blank" rel="noopener noreferrer">ELLIS</a> PhD student the <a href="https://www.uva.nl" target="_blank" rel="noopener noreferrer">University of Amsterdam (UvA)</a>
-          where I'm a part of the 
-          <a href="https://amlab.science.uva.nl" target="_blank" rel="noopener noreferrer">AMLab</a> and 
-          <a href="https://ivi.fnwi.uva.nl/uvaboschdeltalab/" target="_blank" rel="noopener noreferrer">Delta Lab</a>. 
-          Previously, I studied Electrical Engineering at the
-          <a href="https://www.iitp.ac.in/" target="_blank" rel="noopener noreferrer">Indian Institute of Technology Patna (IITP)</a>
-          and Artificial Intelligence at the
-          <a href="https://www.uva.nl" target="_blank" rel="noopener noreferrer">University of Amsterdam (UvA)</a>.
-        </p>
+    <header id="top">
+      <div class="intro">
+      <h1>Rajeev Verma</h1>
 
-        <nav id="contact-info" aria-label="Contact links">
-          <a href="mailto:rajeev.ee15@gmail.com">Email</a>
-          <a href="https://scholar.google.com/citations?hl=en&user=xSgjaZYAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener noreferrer">Google Scholar</a>
-          <a href="assets/pdf/CV_updated.pdf">CV</a>
-          <a href="https://github.com/rajevv" target="_blank" rel="noopener noreferrer">Github</a>
-          <a href="https://twitter.com/RaajeevVerma" target="_blank" rel="noopener noreferrer">Twitter</a>
-          <a href="https://www.linkedin.com/in/rajeevee15/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </nav>
-      </div>
-    </header>
+      <p class="contact-line">
+        PhD Student, AMLab &amp; Delta Lab, University of Amsterdam
+        <br />
+        <a href="mailto:rajeev.ee15@gmail.com">rajeev.ee15@gmail.com</a>
+        <span class="sep">·</span>
+        <a href="https://github.com/rajevv" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span class="sep">·</span>
+        <a href="https://twitter.com/RaajeevVerma" target="_blank" rel="noopener noreferrer">Twitter</a>
+        <span class="sep">·</span>
+        <a href="https://www.linkedin.com/in/rajeevee15/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      </p>
 
-    <section aria-labelledby="research-interests">
-      <h2 id="research-interests">Research Interests</h2>
+      <p>
+        I'm an <a href="https://ellis.eu/sites" target="_blank" rel="noopener noreferrer">ELLIS</a> PhD student at the
+        <a href="https://www.uva.nl" target="_blank" rel="noopener noreferrer">University of Amsterdam (UvA)</a>,
+        where I'm a part of the
+        <a href="https://amlab.science.uva.nl" target="_blank" rel="noopener noreferrer">AMLab</a> and
+        <a href="https://ivi.fnwi.uva.nl/uvaboschdeltalab/" target="_blank" rel="noopener noreferrer">Delta Lab</a>.
+        Previously, I studied Electrical Engineering at the
+        <a href="https://www.iitp.ac.in/" target="_blank" rel="noopener noreferrer">Indian Institute of Technology Patna (IITP)</a>
+        and Artificial Intelligence at the
+        <a href="https://www.uva.nl" target="_blank" rel="noopener noreferrer">University of Amsterdam (UvA)</a>.
+      </p>
+
       <p>
         I'm generally interested in bridging the gap between prediction and decision-making, especially in the context of the
         institutional separation between model designers and decision-makers. I'm also interested in safe statistics, imprecise
         probabilities, and possibility theory.
       </p>
+
       <p>
         Previously, I worked on studying the calibration properties of learning to defer (L2D) systems
         [<a href="https://proceedings.mlr.press/v162/verma22c.html" target="_blank" rel="noopener noreferrer">ICML'22</a>],
@@ -290,10 +439,16 @@
         test-time adaption of L2D to new experts
         [<a href="https://arxiv.org/abs/2403.02683" target="_blank" rel="noopener noreferrer">AISTATS'24</a>].
       </p>
-    </section>
+      </div>
 
-    <section aria-labelledby="blog">
-      <h2 id="blog">Blog</h2>
+      <div class="photo-col">
+        <img id="photo" src="assets/prof_pic.jpg" alt="Portrait photo of Rajeev Verma" loading="lazy" />
+        <p class="photo-tag">I bridge philosophy, mathematics, and policy.</p>
+      </div>
+    </header>
+
+    <section aria-labelledby="blog" id="blog">
+      <h2>Blog</h2>
       <ul class="plain-list">
         <li>
           <a href="https://decisive-bun-09e.notion.site/Notes-from-the-underground-2cbef9bcc159806c9283d7b91ff3e2e1?source=copy_link"
@@ -303,104 +458,101 @@
           — a running blog of my most-random thoughts.
         </li>
         <li>
-          <a href="https://decisive-bun-09e.notion.site/No-sure-loss-calibration-and-insurance-174ef9bcc1598012b37bd647c2fb879e"
-             target="_blank" rel="noopener noreferrer">
+          <a href="blog/no-sure-loss-calibration-insurance.html">
             No sure loss, calibration, and insurance.
           </a>
         </li>
         <li>
-          <a href="https://decisive-bun-09e.notion.site/What-are-good-forecasts-2a1ef9bcc15980948fcfcb6a953747f1"
-             target="_blank" rel="noopener noreferrer">
+          <a href="blog/what-are-good-forecasts.html">
             What are good forecasts?
           </a>
         </li>
         <li>
           <a href="blog/relativistic_uncertainty.html">
-            A relativistic perspective of uncertainty in machine learning.</a><br />
-            <em>Note:</em> A part of this appeared at the <a href="https://sites.google.com/view/philmlicml26/home" target="_blank" rel="noopener noreferrer">ICML 2026 Workshop on Philosophy Meets Machine Learning: What Counts As Trustworthy?</a>
-            as <a href="https://openreview.net/forum?id=xFWOj1sutQ" target="_blank" rel="noopener noreferrer">A Relativistic Perspective of Reliability in Machine Learning</a>.
+            A relativistic perspective of uncertainty in machine learning.</a>
+          <span class="pub-note"><em>Note:</em> A part of this appeared at the <a href="https://sites.google.com/view/philmlicml26/home" target="_blank" rel="noopener noreferrer">ICML 2026 Workshop on Philosophy Meets Machine Learning: What Counts As Trustworthy?</a>
+            as <a href="https://openreview.net/forum?id=xFWOj1sutQ" target="_blank" rel="noopener noreferrer">A Relativistic Perspective of Reliability in Machine Learning</a>, that was invited for an in-person <span class="award">oral</span> talk.</span>
         </li>
       </ul>
     </section>
 
-    <section aria-labelledby="pubs">
-      <h2 id="pubs">Selected Publications</h2>
+    <section aria-labelledby="publications" id="publications">
+      <h2>Selected Publications</h2>
       <p><em>(* Denotes equal contribution)</em></p>
 
       <h3 class="pub-subhead">Ongoing &amp; Workshop Articles</h3>
       <ul class="pub-list">
         <li>
-          <u>Rajeev Verma</u>, Anurag Singh, Christian A. Naesseth, Eric Nalisnick, Krikamol Muandet.<br />
-          <a href="https://openreview.net/forum?id=QCEYqHijVO" target="_blank" rel="noopener noreferrer">Avoiding the Tragedy of the Commons in AI Regulation via Dynamic Licensing</a>.<br />
-          <a href="https://alimama-tech.github.io/aims-2026/" target="_blank" rel="noopener noreferrer">ICLR 2026 Workshop on AI for Mechanism Design and Strategic Decision Making (AIMS)</a>.
+          <a class="pub-title" href="https://openreview.net/forum?id=QCEYqHijVO" target="_blank" rel="noopener noreferrer">Avoiding the Tragedy of the Commons in AI Regulation via Dynamic Licensing</a>
+          <span class="pub-authors"><u>Rajeev Verma</u>, Anurag Singh, Christian A. Naesseth, Eric Nalisnick, Krikamol Muandet</span>
+          <span class="pub-venue"><a href="https://alimama-tech.github.io/aims-2026/" target="_blank" rel="noopener noreferrer">ICLR 2026 Workshop on AI for Mechanism Design and Strategic Decision Making (AIMS)</a></span>
         </li>
         <li>
-          <u>Rajeev Verma</u><sup>*</sup>, Rabanus Derr<sup>*</sup>, Christian A. Naesseth, Volker Fischer, Eric Nalisnick.<br />
-          <a href="assets/pdf/So_What_are_Good_Imprecise_Forecasts_v3.pdf" target="_blank" rel="noopener noreferrer">So What are Good Imprecise Forecasts?</a><br />
-          <a href="https://sites.google.com/view/eiml-eurips2025/home?authuser=0" target="_blank" rel="noopener noreferrer">Workshop on Epistemic Intelligence in Machine Learning (EurIPS 2025)</a>.
+          <a class="pub-title" href="assets/pdf/So_What_are_Good_Imprecise_Forecasts_v3.pdf" target="_blank" rel="noopener noreferrer">So What are Good Imprecise Forecasts?</a>
+          <span class="pub-authors"><u>Rajeev Verma</u><sup>*</sup>, Rabanus Derr<sup>*</sup>, Christian A. Naesseth, Volker Fischer, Eric Nalisnick</span>
+          <span class="pub-venue"><a href="https://sites.google.com/view/eiml-eurips2025/home?authuser=0" target="_blank" rel="noopener noreferrer">Workshop on Epistemic Intelligence in Machine Learning (EurIPS 2025)</a></span>
         </li>
       </ul>
 
       <h3 class="pub-subhead">Conference Papers &amp; Thesis</h3>
       <ul class="pub-list">
         <li>
-          Abbavaram Gowtham Reddy, <u>Rajeev Verma</u>, Celia Rubio-Madrigal, Krikamol Muandet, Rebekka Burkholz.<br />
-          <a href="https://openreview.net/forum?id=1mQT8PXIy8" target="_blank" rel="noopener noreferrer">Boosting for Predictive Sufficiency</a>.<br />
-          In ICLR 2026.
+          <a class="pub-title" href="https://openreview.net/forum?id=1mQT8PXIy8" target="_blank" rel="noopener noreferrer">Boosting for Predictive Sufficiency</a>
+          <span class="pub-authors">Abbavaram Gowtham Reddy, <u>Rajeev Verma</u>, Celia Rubio-Madrigal, Krikamol Muandet, Rebekka Burkholz</span>
+          <span class="pub-venue">ICLR 2026</span>
         </li>
 
         <li>
-          Alexander Timans<sup>*</sup>, <u>Rajeev Verma</u><sup>*</sup>, Eric Nalisnick, Christian A. Naesseth.<br />
-          <a href="https://openreview.net/forum?id=tpKhNjoErI" target="_blank" rel="noopener noreferrer">On Continuous Monitoring of Risk Violations under Unknown Shift</a>.<br />
-          In UAI 2025. <a href="assets/pdf/safe-online-thresholding.pdf" target="_blank" rel="noopener noreferrer">[talk]</a>
+          <a class="pub-title" href="https://openreview.net/forum?id=tpKhNjoErI" target="_blank" rel="noopener noreferrer">On Continuous Monitoring of Risk Violations under Unknown Shift</a>
+          <span class="pub-authors">Alexander Timans<sup>*</sup>, <u>Rajeev Verma</u><sup>*</sup>, Eric Nalisnick, Christian A. Naesseth</span>
+          <span class="pub-venue">UAI 2025 &middot; <a href="assets/pdf/safe-online-thresholding.pdf" target="_blank" rel="noopener noreferrer">[talk]</a></span>
         </li>
 
         <li>
-          <u>Rajeev Verma</u>, Volker Fischer, Eric Nalisnick.<br />
-          <a href="https://arxiv.org/abs/2412.14142" target="_blank" rel="noopener noreferrer">On Calibration in Multi-Distribution Learning</a>.<br />
-          In ACM FAccT 2025.<br />
-          <em>Note:</em> Also gave an invited <a href="assets/pdf/LuWSI-talk.pdf" target="_blank" rel="noopener noreferrer">talk</a> at the
-          <a href="https://fm.ls/luwsi2025" target="_blank" rel="noopener noreferrer">2nd Workshop on Learning Under Weakly Structured Information</a>.
+          <a class="pub-title" href="https://arxiv.org/abs/2412.14142" target="_blank" rel="noopener noreferrer">On Calibration in Multi-Distribution Learning</a>
+          <span class="pub-authors"><u>Rajeev Verma</u>, Volker Fischer, Eric Nalisnick</span>
+          <span class="pub-venue">ACM FAccT 2025</span>
+          <span class="pub-note"><em>Note:</em> Also gave an invited <a href="assets/pdf/LuWSI-talk.pdf" target="_blank" rel="noopener noreferrer">talk</a> at the
+          <a href="https://fm.ls/luwsi2025" target="_blank" rel="noopener noreferrer">2nd Workshop on Learning Under Weakly Structured Information</a>.</span>
         </li>
 
         <li>
-          Dharmesh Tailor, Aditya Patra, <u>Rajeev Verma</u>, Putra Manggala, Eric Nalisnick.<br />
-          <a href="https://arxiv.org/abs/2403.02683" target="_blank" rel="noopener noreferrer">Learning to Defer to a Population: A Meta-Learning Approach</a>.<br />
-          In AISTATS 2024.<br />
-          <span class="award">[Oral, Student paper award (top 1%)]</span>
+          <a class="pub-title" href="https://arxiv.org/abs/2403.02683" target="_blank" rel="noopener noreferrer">Learning to Defer to a Population: A Meta-Learning Approach</a>
+          <span class="pub-authors">Dharmesh Tailor, Aditya Patra, <u>Rajeev Verma</u>, Putra Manggala, Eric Nalisnick</span>
+          <span class="pub-venue">AISTATS 2024 &middot; <span class="award">Oral, Student paper award (top 1%)</span></span>
         </li>
 
         <li>
-          <u>Rajeev Verma</u><sup>*</sup>, Daniel Barrejón<sup>*</sup>, Eric Nalisnick.<br />
-          <a href="https://proceedings.mlr.press/v206/verma23a.html" target="_blank" rel="noopener noreferrer">Learning to Defer to Multiple Experts: Consistent Surrogate Losses, Confidence Calibration, and Conformal Ensembles</a>.<br />
-          In AISTATS 2023.<br />
-          <em>Note:</em> Also appeared at the <a href="https://sites.google.com/view/icml-2022-hmcat/home" target="_blank" rel="noopener noreferrer">ICML 2022 Workshop on Human-Machine Collaboration and Teaming</a>
-          as <a href="https://dbarrejon.github.io/docs/ICML_HMCaT2022.pdf" target="_blank" rel="noopener noreferrer">On the Calibration of Learning to Defer to Multiple Experts</a>.
+          <a class="pub-title" href="https://proceedings.mlr.press/v206/verma23a.html" target="_blank" rel="noopener noreferrer">Learning to Defer to Multiple Experts: Consistent Surrogate Losses, Confidence Calibration, and Conformal Ensembles</a>
+          <span class="pub-authors"><u>Rajeev Verma</u><sup>*</sup>, Daniel Barrejón<sup>*</sup>, Eric Nalisnick</span>
+          <span class="pub-venue">AISTATS 2023</span>
+          <span class="pub-note"><em>Note:</em> Also appeared at the <a href="https://sites.google.com/view/icml-2022-hmcat/home" target="_blank" rel="noopener noreferrer">ICML 2022 Workshop on Human-Machine Collaboration and Teaming</a>
+          as <a href="https://dbarrejon.github.io/docs/ICML_HMCaT2022.pdf" target="_blank" rel="noopener noreferrer">On the Calibration of Learning to Defer to Multiple Experts</a>.</span>
         </li>
 
         <li>
-          <u>Rajeev Verma</u>, Eric Nalisnick.<br />
-          <a href="https://proceedings.mlr.press/v162/verma22c.html" target="_blank" rel="noopener noreferrer">Calibrated Learning to Defer with One-vs-All Classifiers</a>.<br />
-          In ICML 2022.
+          <a class="pub-title" href="https://proceedings.mlr.press/v162/verma22c.html" target="_blank" rel="noopener noreferrer">Calibrated Learning to Defer with One-vs-All Classifiers</a>
+          <span class="pub-authors"><u>Rajeev Verma</u>, Eric Nalisnick</span>
+          <span class="pub-venue">ICML 2022</span>
         </li>
 
         <li>
-          <u>Rajeev Verma</u>.<br />
-          <a href="assets/pdf/MScThesis.pdf" target="_blank" rel="noopener noreferrer">On the Calibration of Learning to Defer Systems</a>.<br />
-          Master's Thesis 2022 (UvA).
-          <a href="assets/pdf/ICAI-15thSeptember.pdf" target="_blank" rel="noopener noreferrer">[talk]</a>
-          <a href="https://ivi.uva.nl/content/news/2022/09/ai-learns-when-it-is-safer-to-leave-a-decision-to-a-human-expert.html" target="_blank" rel="noopener noreferrer">[UvA News]</a>
+          <a class="pub-title" href="assets/pdf/MScThesis.pdf" target="_blank" rel="noopener noreferrer">On the Calibration of Learning to Defer Systems</a>
+          <span class="pub-authors"><u>Rajeev Verma</u></span>
+          <span class="pub-venue">Master's Thesis 2022 (UvA) &middot;
+            <a href="assets/pdf/ICAI-15thSeptember.pdf" target="_blank" rel="noopener noreferrer">[talk]</a>
+            <a href="https://ivi.uva.nl/content/news/2022/09/ai-learns-when-it-is-safer-to-leave-a-decision-to-a-human-expert.html" target="_blank" rel="noopener noreferrer">[UvA News]</a></span>
         </li>
       </ul>
     </section>
 
-    <section aria-labelledby="service">
-      <h2 id="service">Service</h2>
+    <section aria-labelledby="service" id="service">
+      <h2>Service</h2>
 
       <div class="service-block">
         <strong>Reviewer</strong>
         <div class="indent">
-          ICML <span class="top-reviewer">(Gold Reviewer, 2026)</span>, NeurIPS <span class="top-reviewer">(Top reviewer, 2023)</span>, UAI, ICLR, ACL<br />
+          ICML <span class="top-reviewer">(Gold reviewer, 2026)</span>, NeurIPS <span class="top-reviewer">(Top reviewer, 2023)</span>, UAI, ICLR, ACL<br />
         </div>
       </div>
 
@@ -413,6 +565,11 @@
         </div>
       </div>
     </section>
+
+    <footer>
+      Design adapted from the template by
+      <a href="https://gregorygundersen.com/" target="_blank" rel="noopener noreferrer">Gregory Gundersen</a>.
+    </footer>
   </main>
 </body>
 </html>

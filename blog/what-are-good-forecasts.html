@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>What are good forecasts? — Rajeev Verma</title>
+  <meta name="description" content="— There are no good forecasts, or every forecast is good." />
+  <link rel="canonical" href="https://rajevv.github.io/blog/what-are-good-forecasts.html" />
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --link: #7a7a7a;
+      --link-hover: #111;
+      --text: #1c1c1c;
+      --muted: #6b6b6b;
+      --rule: #e4e4e4;
+      --mono: 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 16.5px;
+      line-height: 1.72;
+      color: var(--text);
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection { background: #fceecb; }
+
+    #container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 28px 22px 96px;
+    }
+
+    nav.site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 0;
+      align-items: baseline;
+      padding-bottom: 14px;
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+    }
+
+    nav.site-nav a {
+      color: var(--link);
+      padding: 0 12px;
+      border-right: 1px solid var(--rule);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    nav.site-nav a:first-child { padding-left: 0; }
+    nav.site-nav a:last-child { border-right: none; }
+    nav.site-nav a:hover { color: var(--link-hover); }
+
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      line-height: 1.18;
+      margin: 0 0 10px;
+    }
+
+    .post-meta {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0 0 40px;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 2em 0 0.6em;
+    }
+
+    h3 { font-size: 1.15rem; font-weight: 700; margin: 1.6em 0 0.5em; }
+    h4 { font-size: 1.0rem; font-weight: 700; margin: 1.4em 0 0.4em; }
+
+    p { margin: 0 0 1.25em; }
+
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-color: #cfcfcf;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    }
+
+    a:hover { color: var(--link-hover); text-decoration-color: currentColor; }
+
+    strong { font-weight: 700; color: #111; }
+
+    ul, ol { padding-left: 1.4em; margin: 0 0 1.25em; }
+    li { margin-bottom: 0.5em; }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding: 2px 0 2px 18px;
+      border-left: 3px solid var(--rule);
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 2.2em 0;
+    }
+
+    .math-block {
+      overflow-x: auto;
+      margin: 1.4em 0;
+    }
+
+    pre {
+      background: #f6f6f4;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+    }
+
+    .callout {
+      background: #f7f7f5;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 1.4em 0;
+    }
+
+    footer {
+      margin-top: 64px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); }
+
+    @media (max-width: 540px) {
+      body { font-size: 16px; }
+      h1 { font-size: 1.7rem; }
+    }
+  </style>
+  <meta name="theme-color" content="#ffffff" />
+</head>
+
+<body>
+  <main id="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a href="../index.html#blog">&larr; Back to blog</a>
+      <a href="../index.html">Home</a>
+    </nav>
+
+    <article>
+      <h1>What are good forecasts?</h1>
+      <p class="post-meta">Rajeev Verma &middot; Blog</p>
+
+      <p><em>— There are no good forecasts, or every forecast is good.</em></p>
+
+      <hr />
+
+      <p>A casual google search will suggest there is an extensive amount of research and thought went into answering this very question. However, lately I’ve thought of a different question that isn’t asked that extensively in the machine learning setting: what are good “imprecise” forecasts. I don’t have the complete answer yet, but in the process I might have some words to add to the age-old question of what are good forecasts?</p>
+
+      <p>First of all, what is a forecast? Given any uncertain event, like rain tomorrow, or the stock price the day after tomorrow—these are the events that haven’t happened yet. Yet we’d want to plan a certain course of action to prepare for them. So to plan ahead, one can refer to the forecasts that are issued ahead of time like, what is the chance of rain tomorrow? We assume a forecaster who converts historical and current information into forecasts, and we’re concerned with if someone is a good forecaster? The issued forecast is a number \(p \in [0,1]\) for some uncertain event, which we assume to be binary \(X \in \{0,1\}\). Since my treatment is the same as the framework of <u>game-theoretic probability pioneered by Glenn Shafer and Vladimir Vovk</u> [1], I’ll attach the “betting” interpretation to the number \(p\).</p>
+
+      <p>Given the uncertain outcome \(X\) (whose value is yet to be materialised), a forecast \(p\) means the <em>fair price </em>for the uncertain outcome \(X\), i.e. the forecaster as an act of making this forecast is signalling that they are <em>indifferent </em>between having \(X\) or \(p\), where the value of \(X\) is assumed to be in the same unit scale. This is arguably the most ancient interpretation of probability: probability does not exist in nature, but one is putting money on the table to signal the strength of the evidence one has towards the uncertain outcome \(X\). Game theoretic probability take this primitive interpretation of probability, and extends it to include two other very natural agents in the setup: the sceptic and the nature.</p>
+
+      <p>So the setup goes like this: the forecaster announces the fair price \(p\) for some uncertain outcome \(X\), which can materialise to either \(0\) or \(1\). The sceptic will now engage in the betting game with the forecaster, i.e. the sceptic will literally buy or sell the gambles the forecaster will make available. So what are the gambles, and what are the gambles made available by the forecaster? A gamble is just an uncertain outcome with some desirability constraint. For example, when the fair price as per the forecaster is \(p\) (or the forecaster value \(X\) same as \(p\)), then for some number \(q \leq p\), the uncertain outcome \(X - q\) is desirable to the forecaster, i.e. if the forecaster will be in favour of buying \(X\) for \(q\), or \(X-q\) has net positive value for the forecaster. Similarly, for any number \(r\geq p\), the outcome \(X-r\) is not desirable to the forecaster. However, \(r-X\) is desirable to the forecaster, which means that the forecaster will be willing to sell \(X\) for price \(r\) making net profit. Next, for the forecast \(p\) we can define the set of available gambles as \(\{-(X - q), -(r-X) \ \mid \ q \leq p, \ r \geq p\}\). By making the forecast, and assuming the betting interpretation of the probability, these are the set of gambles available to the sceptic. So what does sceptic do? A sceptic starts with some unit wealth, and strategically starts putting some proportion of their money on these gambles. For instance, given some gamble \(G\) of the form as in the set of available gambles, the sceptic will stake \(\lambda\) of their wealth for \(G\), hoping to have \(1 + \lambda \cdot G\) as the end wealth as a result of this transaction. But the sceptic would not stop at just one round, they will continuously choose strategic stakes to have the accumulated wealth after, say \(t\) rounds as</p>
+
+      <p>\(\quad \quad \quad W_t = \prod_{i=1}^{t}\left(1 \ + \ \lambda_i\cdot G\right), \ G \in \{-\left(X-q\right), \ -\left(r-X\right) \ \vert \ q\leq p, \ r \geq p\}\).</p>
+
+      <p>After each round, the agent Nature reveals the realised value of \(X\). Note that the forecaster is independent of nature, and has no bearing whatsoever with how nature behaves. However, the forecaster <em>claims</em> to have some information about how the nature may behave. The sceptic is trying to test this claim, by actually making use of the announced forecasts.</p>
+
+      <p>A standard argument (which I won’t go much into details) would say that \(W_t\) process is a super-martingale (<em>as per the forecaster</em>) which means that \(\mathbb{E}\left[\ W_t \ \mid \ \mathcal{F}_{t-1} \ \right] \leq W_{t-1}\), where one can think \(\mathcal{F}_{t-1}\) as encapsulating all the knowledge before the nature reveals \(X_t\) at round \(t\). As per the forecaster means, that this is what this agent is getting into by the very act of making forecasts and by providing a set of available gambles, i.e. this agent <em>thinks</em> the sceptic will not be able to make money. And the whole setup now reveals that if the sceptic does indeed ends up making unbounded money, then the forecaster has no clue whatsoever on the behaviour of the nature. Informally, the forecaster sets up the game, and decide the rules of the game, and if the sceptic (who has everything against them the way the game is setup) ends up winning (making money) in this rigged game, then the forecaster is not making very good forecasts.</p>
+
+      <p>This is a very standard argument, and has laid the groundwork for what is now a rather popular framework of <u>testing by betting</u> [2]. However, what didn’t occur to me before is the notion of information asymmetry that the business of forecasting is based on. <em>There are no universally good forecasts—a forecast is good only subjected to the information the sceptic (or the evaluator in general has). </em>In the setup described above, we can look at sceptic at bit closely. In the game that is rigged, a sceptic is trying to get ahead by strategically choosing \(\lambda\) at each time step, and to be able to do so the sceptic is allowed to use any information that does not depend on the future, i.e. before the nature reveals the uncertain \(X\). It is easy to see that if the sceptic has more information, or is able to design an informative mechanism to be able to foresee the future better than the forecast, the forecaster can be defeated in their own game.</p>
+
+      <p>I like this sentence by <u>Paul Vitányi in his very nice overview of the notion of randomness</u> [3]: “describing ‘randomness’ in terms of ‘unpredictability’ is problematic and possibly unsatisfactory.” At the risk of digressing a bit, I’ll give a brief informal overview of the program of studying randomness via unpredictability. This program was initiated by Richard Von Mises as an attempt to justify the application of an axiomatic and abstract theory of probability to real-life. The question is given an infinite sequence of \(0\) and \(1\) as \(01001001000111010101\ldots\), when can we say if this sequence is truly random (or generated by some random source) or not. To think of this as an outcome sequence of some coin with heads rate \(p\), Von Mises notion was based on the ‘Law of Excluded Gambling Strategy,’ i.e. no gambler betting in <em>fixed amounts</em> on the flips of a coin cannot make more money in the long run by betting randomly (as in with no strategy) than betting with some strategy in mind. Here, strategy is defined by some selection rule that looks at past and strategically decides <em>whether to bet</em> on the next coin flip or not. This notion quickly went into problems as it was not clear what selection rules are admissible, and the resolution came from the notion of computability, i.e. there should not exist any computable strategy or system that can make the gambler make money. It that happens, the sequence can be deemed non-random. Subsequent notions of randomness make this more tangible by allowing for not when to bet but also how much to bet, and if any martingale process can make unbounded money on the outcome sequence, then the sequence will be deemed non-random. However, we do not have a good mechanism to test if something is <em>truly</em> random.</p>
+
+      <p>Randomness and forecasts are two sides of the same coin, and the betting interpretation is a unified way of studying both. And hence, one common message is that of <u>Popperian falsifiability</u> [4]: randomness and forecasts are based on falsification, and not verification. One can run sophisticated tests to try to falsify forecasts, but one cannot claim if the forecasts are truly good. And the falsification strategy depends on the information or the extent of sophistication (compute, etc.) the sceptic (or evaluator) has.</p>
+
+      <p><u>Cynthia Dwork and colleagues</u> [6] operationalise this via their now celebrated framework of outcome indistinguishability that has seen some success. The framework assumes a forecaster and computational form of tests, which they call distinguishers, and a forecaster will be called outcome indistinguishable from the nature, if no distinguisher can falsify the forecaster based on the observational data that is coming from nature. However, the framework assumes that the distinguisher is also operating under the same information access as the forecaster. In the machine learning predictor scenario, when we’re designing algorithms for some high-dimensional objects like people, we have some representation in the form of what we call a covariate \(\mathbf{x}\), and the predictor gives the forecast for some outcome, like the chance of defaulting a loan, or some welfare program access like housing. It is clear that we’d need some evaluation mechanism on such a predictor to be able to rely on the predictions, and clearly outcome indistinguishability offers one—any predictor is good with respect to some set of distinguishers if it cannot be falsified any distinguishers from the set. And the popular notions of <u>multi-accuracy</u> [7] and <u>multi-calibration</u> [8] follow from it.</p>
+
+      <p>It seems like we can make peace with this, and design better distinguishers or tests to definitely falsify the forecasts. However, while outcome indistinguishability respects computation boundedness, it as per my understanding, does not consider information asymmetry, i.e. when the evaluator has more information than the forecaster? This post has gotten long, and I’ll stop here. I’ll elaborate more on information asymmetry next.</p>
+
+      <p><strong>References:</strong></p>
+
+      <p>[1] Game-Theoretic Foundations of Probability and Finance by Glenn Shafer and Vladimir Vovk. <a href="https://www.probabilityandfinance.com/2019_book/index.html" target="_blank" rel="noopener noreferrer"><u>https://www.probabilityandfinance.com/2019_book/index.html</u></a></p>
+
+      <p>[2] Testing by betting: A strategy for statistical and scientific communication. <a href="https://glennshafer.com/assets/downloads/articles/article104_jrss_shafer-testingbybetting-with-discussion-response.pdf" target="_blank" rel="noopener noreferrer"><u>glennshafer.com</u></a>​</p>
+
+      <p>[3] Paul M.B. Vitanyi. Randomness. <a href="https://arxiv.org/abs/math/0110086" target="_blank" rel="noopener noreferrer">arXiv.org<u>Randomness</u></a>​</p>
+
+      <p>[4] Popperian Falsifiability. <a href="https://en.wikipedia.org/wiki/Falsifiability" target="_blank" rel="noopener noreferrer">Wikipedia<u>Falsifiability</u></a>​</p>
+
+      <p>[5] Derr and Williamson. Forecast Evaluation and the Relationship of Regret and Calibration. <a href="https://arxiv.org/abs/2401.14483" target="_blank" rel="noopener noreferrer"><u>https://arxiv.org/abs/2401.14483</u></a>.</p>
+
+      <p>[6] Dwork et al. Outcome Indistinguishability. <a href="https://arxiv.org/abs/2011.13426" target="_blank" rel="noopener noreferrer">arXiv.org<u>Outcome Indistinguishability</u></a>​</p>
+
+      <p>[7] P. Kim et al. Multiaccuracy: Black-Box Post-Processing for Fairness in Classification. <a href="https://arxiv.org/abs/1805.12317" target="_blank" rel="noopener noreferrer"><u>https://arxiv.org/abs/1805.12317</u></a></p>
+
+      <p>[8] Hebert-Johnson et al. Multicalibration: Calibration for the (Computationally-Identifiable) Masses. <a href="https://proceedings.mlr.press/v80/hebert-johnson18a.html" target="_blank" rel="noopener noreferrer">PMLR<u>Multicalibration: Calibration for the (Computationally-Ident…</u></a>​</p>
+    </article>
+
+    <footer>
+      &larr; <a href="../index.html#blog">Back to all posts</a>
+    </footer>
+  </main>
+</body>
+</html>

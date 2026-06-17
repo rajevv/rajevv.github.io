@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>No sure loss, calibration, and insurance — Rajeev Verma</title>
+  <meta name="description" content="The field of machine learning is rife with uncertainty quantification. In fact, the standard approach to prediction is based on quantifying the confidence …" />
+  <link rel="canonical" href="https://rajevv.github.io/blog/no-sure-loss-calibration-insurance.html" />
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --link: #7a7a7a;
+      --link-hover: #111;
+      --text: #1c1c1c;
+      --muted: #6b6b6b;
+      --rule: #e4e4e4;
+      --mono: 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 16.5px;
+      line-height: 1.72;
+      color: var(--text);
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection { background: #fceecb; }
+
+    #container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 28px 22px 96px;
+    }
+
+    nav.site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 0;
+      align-items: baseline;
+      padding-bottom: 14px;
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+    }
+
+    nav.site-nav a {
+      color: var(--link);
+      padding: 0 12px;
+      border-right: 1px solid var(--rule);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    nav.site-nav a:first-child { padding-left: 0; }
+    nav.site-nav a:last-child { border-right: none; }
+    nav.site-nav a:hover { color: var(--link-hover); }
+
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      line-height: 1.18;
+      margin: 0 0 10px;
+    }
+
+    .post-meta {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0 0 40px;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 2em 0 0.6em;
+    }
+
+    h3 { font-size: 1.15rem; font-weight: 700; margin: 1.6em 0 0.5em; }
+    h4 { font-size: 1.0rem; font-weight: 700; margin: 1.4em 0 0.4em; }
+
+    p { margin: 0 0 1.25em; }
+
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-color: #cfcfcf;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    }
+
+    a:hover { color: var(--link-hover); text-decoration-color: currentColor; }
+
+    strong { font-weight: 700; color: #111; }
+
+    ul, ol { padding-left: 1.4em; margin: 0 0 1.25em; }
+    li { margin-bottom: 0.5em; }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding: 2px 0 2px 18px;
+      border-left: 3px solid var(--rule);
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 2.2em 0;
+    }
+
+    .math-block {
+      overflow-x: auto;
+      margin: 1.4em 0;
+    }
+
+    pre {
+      background: #f6f6f4;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+    }
+
+    .callout {
+      background: #f7f7f5;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 1.4em 0;
+    }
+
+    footer {
+      margin-top: 64px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); }
+
+    @media (max-width: 540px) {
+      body { font-size: 16px; }
+      h1 { font-size: 1.7rem; }
+    }
+  </style>
+  <meta name="theme-color" content="#ffffff" />
+</head>
+
+<body>
+  <main id="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a href="../index.html#blog">&larr; Back to blog</a>
+      <a href="../index.html">Home</a>
+    </nav>
+
+    <article>
+      <h1>No sure loss, calibration, and insurance</h1>
+      <p class="post-meta">Rajeev Verma &middot; Blog</p>
+
+      <p>The field of machine learning is rife with uncertainty quantification. In fact, the standard approach to prediction is based on quantifying the confidence over the space of possible outcomes, e.g. the confidence over the whole space of vocabulary for the next token prediction in text generation. Despite the wider scope of quantifying uncertainty in machine learning pipelines, the consensus over what defines a good notion of uncertainty remains an unsettled topic. Calibration, in my limited viewpoint, takes the cake of a super simple, highly minimal, and yet very powerful notion of uncertainty quantification. And maybe this is the reason that it has remained an object of study among machine learning practitioners for years. Despite the promise and the popularity of calibration, I’ve always felt a tinge of discomfort every time I’ve heard or read about it. In this note, I’ll try to articulate why it could have been like that, and why this should not be the case. In this first section, I’ll talk about the promise of calibration as well as why that has concerned me. In the second section, I’ll argue why that concern may not be that much of a concern after all.</p>
+
+      <h2><strong>No sure loss and calibration</strong></h2>
+
+      <p><em><strong>So what exactly is calibration</strong></em><strong>?</strong> Put simply, it is an alignment certification of the estimated confidence and the occurrence of outcomes in the real-world over which the forecast was made. So if the forecast was that the risk of someone having a certain disease is 70%, of all the individuals who had the same forecast, 70% actually had a positive diagnosis in real-world. Quite nicely then, it lends interpretability to the forecast. However, real-world requires more than just interpretability. In the example we have, once the forecast of 70% is made for some individual, a medical professional needs to plan a course of action—-whether to administer treatment to this person or not? Or to administer treatment A vs treatment B? The crux of the situation is that once the prediction is made, some decision-maker has to act on it by taking certain actions. And this is where things get interesting, as there could be a range of decision-makers who will consume the same prediction, with their specific utility or cost functions, and different risk attitudes—-risk neutral or risk averse. I’ll give one more example, however it is bit unrealistic to simplify things. Consider the risk forecasting system estimating the chance of early-stage osteoporosis in individuals over the next five years. In conclusion, to think about the goals of uncertainty quantification, it may be wise to consider who are the consumers of that uncertainty, and what they want?</p>
+
+      <p><em><strong>Notation:</strong></em> To informally formalise, we consider the standard machine learning setup with space \(\mathcal{X} \times \mathcal{Y}\), a distribution \(P\) on it and canonical random variables on this space denoted as \(X\) and \(Y\), and a forecaster \(h : \mathcal{X} \rightarrow [0,1]\), estimating the covariate dependent probability for some event, for example: the chance early-stage osteoporosis in individuals over the next five years based on the patient’s history. Now obviously, based on the forecast, a certain individual may have the choice to go for the advanced bone density scan or ignore the diagnostic test, both options with certain costs attached to them. How should a patient decision-maker act then?</p>
+
+      <p>To think about this question, it has helped me to think about it in terms of the behavioural interpretation of probability as pioneered by De Finetti. In the risk prediction setting, if the person will develop osteoporosis eventually and they decide to go for an advanced test, let’s say they get the reward for +20, and in case they go for the advanced test when they won’t develop the osteoporosis, they get the reward of -10, for financial costs. When the forecaster announces that a certain individual has 70% chance of having an osteoporosis, an individual who does not know a-priori whether they would have the osteoporosis or not, in their choice with going for the advanced test, they are largely dealing with a gamble \(G\) where with \(70\%\) chance, they will get \(+20\), and with \(30\%\) chance they get \(-10\). Or so the forecaster wants the decision-maker to think, as their true rate of osteoporosis might be different from what is forecasted by the forecaster. How can the decision-maker then assert the quality of the forecast?</p>
+
+      <p><em><strong>No sure loss</strong></em> <em><strong>criterion:</strong></em> When the forecaster has announced the gamble \(G\), they have also announced the <em>fair </em>price \(\mu\) to sell or buy that gamble, i.e. \(\mu\) = 0.7*20 - 0.3*10 = 11. Now if the decision-maker is risk-neutral, i.e. they value the gamble \(G\) as equally as its fair price, they may decide to engage in the transaction of buying \(G\) at the price of \(\mu\), thus having bought the gamble \(G - \mu\). And the forecaster has the gamble \(\mu - G\). One desiderata each agent has in this situation is the no sure loss criterion, i.e. each agent does not want to be at the risk being a sure loser when they make this transaction. Consider the true rate of osteoporosis of this individual is \(\eta\), then the expected gain when the decision-maker decides to engage in this transaction is \(\mathbb{E}_{\eta}[G - \mu]\), which due to the no sure loss criterion for each agent should be \(0\), i.e. \(\mathbb{E}_{\eta}[G - \mu] = 0\), or \(\mathbb{E}_{\eta}[G] = \mathbb{E}_{h}[G]\) where \(h\) is the forecast by the forecaster. <em>This gives us the desirable requirement on the forecast: if both agents subscribe to the no sure loss criteria, then the forecast should enable the decision-maker to faithfully evaluate the value of the gamble. It’s worth reflecting why no sure loss criterion makes sense: as noted above, decision-makers consume probabilities to make decisions, an estimate is minimally good enough if it enables them to evaluate the consequences of those decisions. [</em><em>And yet when I’m writing this, I’m bit uncomfortable, and I’ll get to that later.]</em></p>
+
+      <p>So far in my example, we’ve considered a single gamble \(G\), however if one wants to put a stronger requirement of no sure loss for every gamble that depends on the forecast, i.e. \(\mathbb{E}_{\eta}[G] = \mathbb{E}_{h}[G] \ \ \forall G\). For instance, these gambles could be of the form of choosing among multiple advanced test. Then, this results in the forecast \(h\) matching the true rate \(\eta\) almost surely. That is, if the forecast is to enable no-sure loss for every gamble dependent on the forecast, it can only happen if the forecast matches the true rate. Obviously, this is very strong and impractical. That’s where the promise of calibration kicks in.</p>
+
+      <p><em><strong>Calibration: </strong></em>It’s worth highlighting that, so far, we consider the individualised decision-making, and it leads to the stronger requirement of the forecast matching the true base rate for each individual, in order to result in no sure loss. Could one relax this? Turns out, it is possible if we consider the population level no-sure loss, or accurate loss estimation. Following the same setup from above, a decision-maker engaging in the transaction with the forecast has the population aggregate utility as \(\mathbb{E}_{X \times Y \sim P}[G - \mathbb{E}_{Y \sim h(X)}G] = \mathbb{E}_{X \times Y \sim P}[G] - \mathbb{E}_{X}\mathbb{E}_{Y \sim h(X)}G\) . It now remains to check that if the forecast is calibrated, then this evaluates to \(0\), as for the second expectation here, consider events of the form \(A = \{X'\ \text{s.t.} \ h\left(X'\right) = \mu\}\), then if the forecast is calibrated, then \(Y \sim h\left(X \right)\) even under the true distribution over these events. Hence for each event \(A\), the second expectation behaves as per the true distribution, which when averaged across all the events \(A_s\) matches the first expectation.</p>
+
+      <p>Thus, calibration enables no sure loss, or accurate risk estimation. The cost of replacing exactly matching the forecast with the base rate by weaker property of calibration, is that now no guarantees can be derived for individual forecasts. This is just a part of the reason why I find calibration bit unsatisfying. Another reason is the notion of risk preferences, as in this note I only talked about risk-neutral decision maker. A risk neutral agent is happy with having the gamble \(G - \mu\), where \(\mathbb{E}[G] = \mu\), i.e. no sure loss (or gain for that matter). However, in situations of osteoporosis diagnosis and other critical applications like tumour relapse prediction, I find it unsettling to evaluate the gamble by expectations. However, I’ll get to that in the next section.</p>
+
+      <p>In the following section, I’ll argue why my concerns about population level no sure loss guarantee as well as evaluating the value of the gamble in terms of expectations could have been unfounded after all.</p>
+
+      <h2><strong>Risk aversion, insurance, and calibration</strong></h2>
+
+      <p>As noted above, when the decision-maker is offered the gamble \(G - \mu\), the decision maker evaluates its value as \(\mathbb{E}[G - \mu]\). However, in practice a decision-maker won’t observe the value \(\mathbb{E}[G]\), instead they will observe either \(+20\) (if they’ll indeed develop osteoporosis and opt for the advanced test) or \(-10\) (they won’t have the osteoporosis, and go for the advanced test)—-i.e. a realistic decision-maker would only make an individualised decision, the consequences of which are one-time gamble value. How can a decision-maker, then, guarantee no-sure loss?</p>
+
+      <p><em><strong>Insurance: </strong></em>The answer comes from insurance. Risk averse individuals prefer a certain reward over the uncertain gamble, and are generally willing to pay extra to reduce the influence of risk. In the osteoporosis risk prediction example, while the expected reward of the gamble \(G\) with forecast \(70\%\) is positive, and hence a risk-neutral agent may opt to go for the advanced test. However, a risk averse individual sees the gap between the actual gain that may materialise in practice: either \(+20\) or \(-10\) which is unsettling to them. Thus, they are willing to pay something, called premium \(L\), to get some certain reward irrespective of what happens—- whether they’ll have osteoporosis or not.</p>
+
+      <p>Concretely, if they have osteoporosis, their gain is \(20 - L\), and if they don’t have osteoporosis, then their gain is \(-10-L+I\), where \(I\) is the insurance payout. Since the decision-maker prefers a fixed certain amount in both cases, \(I\) would equal \(30\). Or the decision-maker is willing to pay a certain premium to the insurance company, such that in a case where they’ve taken the wrong decision, the insurance company can cover for the losses. Now, the decision-maker is not dependent on risk, as irrespective of what happens, they have secured their reward, unlike the case of the decision-maker basing their decisions on expectations. What should be the paid premium then?</p>
+
+      <p><em><strong>Actuarially fair insurance: </strong></em>Actuarial fair insurance, where the premium equals the expected payout, can be motivated from the perspective of the no sure loss principle. In offering the premium to the forecaster in exchange of the payout, a forecaster is engaging in the gamble \(Z\) that pays \(L\) or \(L - I\). A decision-maker wants to regulate the premium a forecaster can charge, and a reasonable choice could be that a forecaster should not make money on average in this transaction, and since the forecaster also does not want to lose money for sure, i.e. \(\mathbb{E}_{h}[Z]=0\), where \(h\) is the forecast. If the forecaster is asserting this condition, they they are maintaining the requirement that they are not exploiting the decision-maker. This leads to the premium being \((1-h)I\), or the expected payout. For our running example, it evaluates to \(0.3*30 = 9\).</p>
+
+      <p><em><strong>Calibration: </strong></em>Following from above, a risk-averse individual in asking for insurance, has exposed the forecaster to the gamble \(Z\) that either pays \(L\) or \(L-I\). And the actuarial fair condition on the insurance maintains that the price \(\mathbb{E}_{h}[Z]\) of this gamble is \(0\). However, the actual expected value of the gamble \(Z\) would be \(\mathbb{E}_{\eta}[Z]\) where \(\eta\) is the true base rate of the osteoporosis chance for certain individual. However, similar to the population level no sure loss criterion in the last section, one can now easily argue that on average across all the forecasts, if the forecasts are calibrated, then the forecaster would not systematically make or lose money, thereby satisfying the no sure loss condition, i.e. \(\mathbb{E}_{X \times Y \sim P}[Z - \mathbb{E}_{h(X)}Z] = 0\). Alternatively, \(\mathbb{E}_{h(X) \times Y}[Z] = \mathbb{E}_{h(X)}\mathbb{E}_{Y \sim Y | h(X)}[Z] = 0\) (due to calibration due to \(\mathbb{E}_{h(X)}[Z] = 0\)).</p>
+
+      <p><em><strong>Interpretation and summary: </strong></em>I started with arguing that calibration enables accurate loss estimation or no sure loss at the population level, which is limited due to having no guarantees on the consequences of individual decisions. Another contention that I had was evaluating the value of the individual gamble using expectations, which is limiting as individual decisions happen only once. In order to mitigate the latter limitation, I borrowed the notion of insurance from the risk aversion literature in the sense that a risk averse individual would prefer a certain outcome over risky outcomes, and they will be willing to pay a certain amount to trade risk with certainty in terms of the actuarial fair insurance. In my running osteoporosis risk prediction example, the decision-maker is happy to have a certain gain of \(+11\) if they chose to go for the advanced test, irrespective of whether they have osteoporosis or not. With the certainty of the reward, the decision-maker can also really deliberate their choice of what course of action to choose in a stress-free manner, and can also account for several other factors to make their decision. In short, knowing the outcome gives them a piece of mind. At least in my mind, this is super nice, as they are now protected for an individual decision. However, the cost of that is passed on to the forecaster who is still relying on the population-level aggregate of their gamble. I’d agree this is an inherent asymmetry, however it looks to me something that is not much of a problem. While a patient choosing to go for an advanced test or not to go is certainly dealing with a critical life decision, and won’t generally be happy with an aggregate guarantee. A decision that is supposed to work, for say 70% of the population, does not guarantee if it’d also work on some individual patient or not. However, an insurance company provides insurance to a large set of individuals—-it can afford to lose on some and gain, i.e. it can diversify the risk. Furthermore, calibration guarantees forecasts align with long-range frequencies, and precisely this is the same principle insurers rely to set premiums and to operate the whole business of insurance. This results in expected payouts balancing with the premium without requiring certainty over individual outcomes.</p>
+
+      <p><em>Thus, in the simplistic setting I’ve considered, I have shown that (actuarial fair) insurance forms a mechanism that can guarantee individual decisions if the calibration condition holds. Or calibration is sufficient for individual decisions via (actuarial) fair insurance. This seems to be putting away some of my concerns about calibration, but I haven’t thought about the practical applicability of this mechanism yet. </em></p>
+
+      <p><strong>Notes and references:</strong></p>
+
+      <ol>
+        <li>While no sure loss condition is popular in the finance literature, my correspondence with it is through the <a href="https://philpapers.org/rec/WALSRW" target="_blank" rel="noopener noreferrer"><u>theory of Imprecise probabilities as proposed by Walley</u></a>, where it serves as the first rationality condition of probability.</li>
+        <li>De Finetti’s behavioural interpretation of probability is widely studied and documented, but <a href="https://research.tilburguniversity.edu/en/publications/on-de-finettis-philosophy-of-probability" target="_blank" rel="noopener noreferrer"><u>this</u></a> doctoral thesis by C. Elliot is a breezy read.</li>
+        <li>I haven’t considered the full implications of the insurance in the setting. It’s worth mentioning that insurance is a business, and certainly wants to make money. So the assumption of actuarial fair insurance is an idealised setting. This <a href="https://dspace.mit.edu/bitstream/handle/1721.1/36389/14-03Fall-2000/NR/rdonlyres/Economics/14-03Intermediate-Applied-MicroeconomicsFall2000/C1777B22-2D4B-418E-A866-FCC39ACBA5B3/0/lec102.pdf" target="_blank" rel="noopener noreferrer"><u>note</u></a> further goes into risk aversion and insurance.</li>
+      </ol>
+
+      <p><strong>Acknowledgements:</strong></p>
+
+      <p>Thanks to <a href="https://enalisnick.github.io/" target="_blank" rel="noopener noreferrer"><u>Eric Nalisnick</u></a> and <a href="https://metodj.github.io/" target="_blank" rel="noopener noreferrer"><u>Metod Jazbec</u></a> for useful comments.</p>
+    </article>
+
+    <footer>
+      &larr; <a href="../index.html#blog">Back to all posts</a>
+    </footer>
+  </main>
+</body>
+</html>
