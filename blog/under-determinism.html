@@ -201,12 +201,6 @@
 
       <hr />
 
-      <figure>
-        <img src="../assets/IMG_20260702_151043.jpg" alt="A cowboy getting off the horse to talk." loading="lazy" />
-      </figure>
-
-      <hr />
-
       <p>For some time now, I've been feeling there is a quite a lot of difference between statistical way of thinking about learning vs the actual practice of machine learning. It has been to the point that I think statistical way is misleading and gives a wrong picture of the field. This note is an attempt to verbalise this feeling rather properly. I'll also talk about randomness, and aleatoric and epistemic dichotomy, and an argument why we need to abandon this terminology (or rather abandon the source of this dichotomy), and replace it what I call under-determinism.</p>
 
       <p>Let's start with the definitions first, and I'll distinguish between statistical way of thinking about learning and actual machine learning way of thinking about learning. To illustrate what I mean by learning, consider the simple task of predicting the risk of a certain disease in individuals from certain population. Given an individual $\omega$ from this population, we want to assign the level of risk this person has for this disease. Now as a very crude predictor, we can always assign the marginal rate of this disease in this population as a risk estimate for this individual. That is I go out in this population and record some past occurrence of this disease. We call this the outcome $y \in \{0,1\}$. And say for $\omega$, we can assign a certain $y$, and hence we have some information of the form $\{(\omega_i, y_i)\}_{i=1}^{N}$. However, say I want to give a rather tailored estimate of the risk for this individual. To do so, I'll start collecting certain features, that I think might be relevant for the task at hand, like maybe age, gender, demographic, previous health status, etc. We call this, the feature representation of the individual, denoted as $x$. Then the learning problem becomes predicting the outcome $y$ based on the features $x$. Now obviously, I have belaboured the setup here. But now here we can highlight an operational difference between statistical way of thinking about learning and actual machine learning.</p>
