@@ -49,9 +49,21 @@
     ::selection { background: #fceecb; }
 
     #container {
-      max-width: 680px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 28px 22px 96px;
+      counter-reset: sidenote-counter;
+    }
+
+    /* Keep the reading column narrow; the extra width is the right gutter for sidenotes. */
+    nav.site-nav,
+    article,
+    footer {
+      max-width: 680px;
+    }
+
+    @media (max-width: 1080px) {
+      #container { max-width: 680px; }
     }
 
     nav.site-nav {
@@ -139,6 +151,67 @@
       margin: 1.4em 0;
     }
 
+    /* ── Tufte-style margin notes ── */
+    .sidenote {
+      float: right;
+      clear: right;
+      width: 240px;
+      margin-right: -270px;
+      margin-top: 0.25rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      font-style: normal;
+      color: var(--muted);
+      position: relative;
+    }
+
+    .sidenote a { color: var(--link); }
+
+    .sidenote-number { counter-increment: sidenote-counter; }
+
+    .sidenote-number::after {
+      content: counter(sidenote-counter);
+      font-size: 0.68rem;
+      position: relative;
+      top: -0.5em;
+      left: 1px;
+      color: var(--muted);
+    }
+
+    .sidenote::before {
+      content: counter(sidenote-counter) " ";
+      font-size: 0.68rem;
+      position: relative;
+      top: -0.5em;
+      color: var(--muted);
+    }
+
+    label.sidenote-number { display: inline; cursor: pointer; }
+    input.margin-toggle { display: none; }
+
+    .sidenote-anchor {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: #cfcfcf;
+    }
+
+    @media (max-width: 1080px) {
+      .sidenote { display: none; }
+
+      .margin-toggle:checked + .sidenote {
+        display: block;
+        float: none;
+        width: auto;
+        margin: 1rem 0 1.4rem;
+        padding: 10px 14px;
+        background: #f7f7f5;
+        border-left: 3px solid var(--rule);
+        border-radius: 0 6px 6px 0;
+      }
+    }
+
     figure {
       margin: 1.8em 0;
       text-align: center;
@@ -219,7 +292,7 @@
 
       <p>And this is under-determinism, so let me finally define it. <em>Under-determinism is the position that the boundary between what we have not yet resolved and what cannot be resolved is not something one can observe from within any modeling framework, and hence no residual uncertainty ever gets a permanent verdict of being irreducible. The strongest verdict one can ever give is: unresolved by all the tests posed so far.</em> And this is also, at last, my full argument against the aleatoric-epistemic dichotomy. The dichotomy pretends that this boundary is a property of the world out there, something one can point at and say: this part is the noise, stop trying. But that is the closed-world viewpoint speaking again, and it is very much the Bayes optimal ceiling all over again, just in a different form. And this is exactly my argument for adopting the terminology of under-determinism: it is an openness towards the world. Calling an uncertainty under-determined doesn't signal a defeat, the way calling it aleatoric does, but rather a choice, that one has decided to keep on doing something about it. And hence it captures a very faithful view of the limits of learning, without the defeatist closed-world view: the limit is always the current tests, and the current tests can always be improved.</p>
 
-      <p>Now I've painted a rather too positive of a picture of the actual practice of machine learning: there are no limits to learning, and machine learning operates scientifically. If one is able to find an error, then one would fix it. Tests are proposed to see how the system is working, and the progress comes from iterating over those tests to pass them, and then proposing the harsher ones. But obviously there is a limit to this viewpoint, and I think this is quite a bit of a frontier challenge. To verbalise it, note that this whole loop of proposing tests and passing them can only run if, at every step, there is a verdict to be had: a test is, after all, a way of producing correct-incorrect judgments, cheaply and repeatably so to say. And hence the entire picture I have painted, the cowboy mentality of pose a test and do anything to pass it, silently rests on one assumption: that there is a fact of the matter about passing, i.e. there is something out there that can hand us the verdict. Now to see where this assumption breaks, I would like to digress a bit and talk about what is science and what it is not. And now it is time for a history lesson.</p>
+      <p>Now I've painted a rather too positive of a picture of the actual practice of machine learning: there are no limits to learning, and machine learning operates scientifically. If one is able to find an error, then one would fix it. Tests are proposed to see how the system is working, and the progress comes from iterating over those tests to pass them, and then proposing the harsher ones. But obviously there is a limit to this viewpoint, and I think this is quite a bit of a frontier challenge. To verbalise it, note that this whole loop of proposing tests and passing them can only run if, at every step, there is a verdict to be had: a test is, after all, a way of producing correct-incorrect judgments, cheaply and repeatably so to say. And hence the entire picture I have painted, the <span class="sidenote-anchor">cowboy</span><label for="sn-cowboy" class="margin-toggle sidenote-number"></label><input type="checkbox" id="sn-cowboy" class="margin-toggle" /><span class="sidenote">I've borrowed the cowboy terminology from Tim Van Erven, from the <a href="https://homepages.cwi.nl/~wmkoolen/MLT_2023/" target="_blank" rel="noopener noreferrer">machine learning theory</a> course at the UvA that he co-teaches.</span> mentality of pose a test and do anything to pass it, silently rests on one assumption: that there is a fact of the matter about passing, i.e. there is something out there that can hand us the verdict. Now to see where this assumption breaks, I would like to digress a bit and talk about what is science and what it is not. And now it is time for a history lesson.</p>
 
       <p>I have equated the practice of machine learning with Popper's view of science, but the historical caveat here is that Popper's view came very late. Back in the days of the Enlightenment, when there was an extensive focus on reason, and so much enthusiasm to understand and overcome so much of humanity's problems via it, the picture of what science even means was a completely different one. Science, for them, meant the absolute truth: something demonstrated with certainty, once and for all&mdash;<em>I think, therefore I am.</em> And by that standard, they would not even consider physics and chemistry, i.e. what Popper calls science, as science, because being empirical disciplines, these are always at the mercy of the next observation, and hence can never reach that certainty. And now here is the interesting bit: values, morality, and politics enjoyed more of a scientific status than physics and chemistry did, as a great deal of prominent figures genuinely thought these could be settled via pure reason, once and for all. Spinoza, for instance, literally writes his <em>Ethics</em> in the style of Euclid, with definitions, axioms, propositions, etc., and Locke claims that morality can be demonstrated just like mathematics. So the hierarchy, back then, was quite the inverse of ours: virtue was a science, and physics was not quite one.</p>
 
