@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>On Reason — Rajeev Verma</title>
+  <meta name="description" content="— Where do reasons come from?" />
+  <link rel="canonical" href="https://rajevv.github.io/blog/on-reason.html" />
+
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    :root {
+      --link: #7a7a7a;
+      --link-hover: #111;
+      --text: #1c1c1c;
+      --muted: #6b6b6b;
+      --rule: #e4e4e4;
+      --mono: 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      font-size: 16.5px;
+      line-height: 1.72;
+      color: var(--text);
+      background: #ffffff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    ::selection { background: #fceecb; }
+
+    #container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 28px 22px 96px;
+      counter-reset: sidenote-counter;
+    }
+
+    /* Keep the reading column narrow; the extra width is the right gutter for sidenotes. */
+    nav.site-nav,
+    article,
+    footer {
+      max-width: 680px;
+    }
+
+    @media (max-width: 1080px) {
+      #container { max-width: 680px; }
+    }
+
+    nav.site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 0;
+      align-items: baseline;
+      padding-bottom: 14px;
+      margin-bottom: 40px;
+      border-bottom: 1px solid var(--rule);
+      font-family: var(--mono);
+      font-size: 0.82rem;
+    }
+
+    nav.site-nav a {
+      color: var(--link);
+      padding: 0 12px;
+      border-right: 1px solid var(--rule);
+      text-decoration: none;
+      transition: color 0.15s ease;
+    }
+
+    nav.site-nav a:first-child { padding-left: 0; }
+    nav.site-nav a:last-child { border-right: none; }
+    nav.site-nav a:hover { color: var(--link-hover); }
+
+    h1 {
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: -0.015em;
+      line-height: 1.18;
+      margin: 0 0 10px;
+    }
+
+    .post-meta {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 0 0 40px;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin: 2em 0 0.6em;
+    }
+
+    h3 { font-size: 1.15rem; font-weight: 700; margin: 1.6em 0 0.5em; }
+    h4 { font-size: 1.0rem; font-weight: 700; margin: 1.4em 0 0.4em; }
+
+    p { margin: 0 0 1.25em; }
+
+    a {
+      color: var(--link);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-color: #cfcfcf;
+      transition: color 0.15s ease, text-decoration-color 0.15s ease;
+    }
+
+    a:hover { color: var(--link-hover); text-decoration-color: currentColor; }
+
+    strong { font-weight: 700; color: #111; }
+
+    ul, ol { padding-left: 1.4em; margin: 0 0 1.25em; }
+    li { margin-bottom: 0.5em; }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding: 2px 0 2px 18px;
+      border-left: 3px solid var(--rule);
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 2.2em 0;
+    }
+
+    .math-block {
+      overflow-x: auto;
+      margin: 1.4em 0;
+    }
+
+    /* ── Tufte-style margin notes ── */
+    .sidenote {
+      float: right;
+      clear: right;
+      width: 240px;
+      margin-right: -270px;
+      margin-top: 0.25rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      font-style: normal;
+      color: var(--muted);
+      position: relative;
+    }
+
+    .sidenote a { color: var(--link); }
+
+    .sidenote-number { counter-increment: sidenote-counter; }
+
+    .sidenote-number::after {
+      content: counter(sidenote-counter);
+      font-size: 0.68rem;
+      position: relative;
+      top: -0.5em;
+      left: 1px;
+      color: var(--muted);
+    }
+
+    .sidenote::before {
+      content: counter(sidenote-counter) " ";
+      font-size: 0.68rem;
+      position: relative;
+      top: -0.5em;
+      color: var(--muted);
+    }
+
+    label.sidenote-number { display: inline; cursor: pointer; }
+    input.margin-toggle { display: none; }
+
+    .sidenote-anchor {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: #cfcfcf;
+    }
+
+    @media (max-width: 1080px) {
+      .sidenote { display: none; }
+
+      .margin-toggle:checked + .sidenote {
+        display: block;
+        float: none;
+        width: auto;
+        margin: 1rem 0 1.4rem;
+        padding: 10px 14px;
+        background: #f7f7f5;
+        border-left: 3px solid var(--rule);
+        border-radius: 0 6px 6px 0;
+      }
+    }
+
+    figure {
+      margin: 1.8em 0;
+      text-align: center;
+    }
+
+    figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 3px;
+      border: 1px solid #ececec;
+    }
+
+    figcaption {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .lede {
+      text-align: right;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 0;
+    }
+
+    pre {
+      background: #f6f6f4;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      font-size: 0.9rem;
+    }
+
+    .callout {
+      background: #f7f7f5;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 1.4em 0;
+    }
+
+    footer {
+      margin-top: 64px;
+      padding-top: 16px;
+      border-top: 1px solid var(--rule);
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); }
+
+    @media (max-width: 540px) {
+      body { font-size: 16px; }
+      h1 { font-size: 1.7rem; }
+    }
+  </style>
+  <meta name="theme-color" content="#ffffff" />
+</head>
+
+<body>
+  <main id="container">
+    <nav class="site-nav" aria-label="Site navigation">
+      <a href="../index.html#blog">&larr; Back to blog</a>
+      <a href="../index.html">Home</a>
+    </nav>
+
+    <article>
+      <h1>On Reason</h1>
+      <p class="post-meta">Rajeev Verma &middot; Essays</p>
+
+      <figure>
+        <img src="on-reason_figs/lisbon-rooftops.jpeg" alt="Rooftops of Lisbon with the Tagus in the background" loading="lazy" />
+      </figure>
+
+      <p class="lede">&mdash;Where do reasons come from?</p>
+
+      <hr />
+
+      <p>Quite some months ago, I submitted a paper titled &ldquo;Deliberative Prediction&rdquo; (not yet public), however when I did that I did not realise or fully grasp the extent of the topic I was dealing with. I still don't, but the submission led me to random explorations that started with political philosophy, covering probability theory, moral philosophy, and now the question of agency and identity. What started as a random and desperate attempt to understand the full implications of the work, in hindsight turned out to be an extraordinary summer. I've decided to cover these topics in the next few essays.</p>
+
+      <p>I'll not give details about the paper (and that is also not the point), but to anyone who has read some philosophy, the title is a misnomer. Prediction and Deliberation covers two different forms of <em>reasoning</em> that cannot be said to go together easily as I've made it so, without alluding to some philosophical baggage that the philosophers have carried along for so long. And hence, in this first part I'll focus on reason, especially theoretical reasoning and practical reasoning.</p>
+
+      <p>The movement of Enlightenment back in seventeenth century had people asking big questions like what to believe, and what to do, and to use the facility of reason to do so. For terminology, <em>theoretical reasoning</em> covers the question of what to believe, and <em>practical reasoning</em> concerns with intention. Both beliefs and intentions live in someone's head, and hence the aim is to provide certain guidelines or mechanisms as to what one believes and what one does, is in some sense, rational or guided by proper reasoning. Say I believe that the Earth is not flat: theoretical reasoning will concern with how did I come up to have such a belief, do I have sufficient and justified reasons for that, etc. Or I could believe that the said paper is going to be rejected, again do I have sufficient evidence to do so, and have I engaged in right kind of reasoning to have this belief. Having such answers are important for philosophers, as they can guide people towards better living their life.</p>
+
+      <p>As an example, a person who believes that the Earth is flat could be deemed irrational, and similarly the person who maintain the belief that the paper will be accepted despite all negative scores can be labelled as delusional or optimistic depending on what is the spectrum of the language. A person has to engage in reasoning to acquire such beliefs. <em>Given the facts about the world</em> (and this will be crucial soon), referred to as the evidence, the agent deploys some reasoning machinery to come with up with a belief. And it is not my point to justify it here, but probability and probability theory provides that machinery to represent as well as to reason with evidence. In fact, probability theory in the western Europe, has its origin in thinking about theoretical reasoning. I'll stop here, for now, about the theoretical reasoning, but here is a picture below to keep in mind.</p>
+
+      <figure>
+        <img src="on-reason_figs/reasoning-machinery.png" alt="Handwritten diagram: evidence (also reasons) feeding into a box labelled reasoning machinery, with an arrow out to belief" loading="lazy" />
+      </figure>
+
+      <p>Say now, on the other hand, I've formed the intention to wake up every morning at $4$ in the morning. As an intention, it is a product of practical reasoning, and as similarly as with the belief, we can ask is this intention somehow rational? What if I have never woken up before $7$ ever once in my life, is the reasoning that led me to have this intention rational. Or consider someone who has the intention to swim from Lisbon to Rio, is the &ldquo;reasoning&rdquo; that got into forming this intention rational?</p>
+
+      <p>Now here is the puzzle that makes this topic a rich of ore of philosophical work: in contrast to belief (or theoretical reasoning) where it was easy to at-least start thinking of saying something about &ldquo;sound reasoning&rdquo; with the facts and evidence provided by the world, and the resulting belief out of this reasoning machinery again subjected to the evaluation against the world, these things go completely missing when does one start to think about intention, and to set the standards of sound practical reasoning. Yes, I haven't woken up at all before $7$ once in my life, that makes the &ldquo;belief&rdquo; of me waking up at $4$ tomorrow relatively low (that's how the world is), but would that make my &ldquo;intention&rdquo; of waking up tomorrow at $4$ somehow faulty: no, I could just summon a whole lot of will, and can just wake up tomorrow at $4$. What about the intention of swimming from Lisbon to Rio? I like these sentences from the <a href="https://plato.stanford.edu/entries/practical-reason/" target="_blank" rel="noopener noreferrer">SEP article on practical reason</a>:</p>
+
+      <blockquote>
+        <p>&ldquo;The intention to go shopping on Wednesday, for instance, is not a state that would or should be abandoned upon ascertaining or confirming that one has not (yet) gone shopping on Wednesday; rather a person with such an intention will ordinarily try to bring the world into alignment with the intention, by going shopping when Wednesday comes around. Intentions are in this way more like an architect's blueprints than like sketches of an already-completed structure (Anscombe 1957; cf. Velleman 1989). Put in terms of an influential and controversially discussed metaphor first introduced by Searle (1983), beliefs have a &lsquo;mind-to-world direction of fit&rsquo;, while intentions seem to have a &lsquo;world-to-mind direction of fit&rsquo; (see Frost 2014 for a critical overview of different accounts of this distinction).&rdquo;</p>
+      </blockquote>
+
+      <p>To give a brief summary of practical reasoning (from what I've gathered), the picture in the case of practical reasoning is not so clear cut as can be drawn in the case of theoretical reasoning. There are two questions: where the reasons come from? And how do we set the standards for good practical reasoning? It is somewhat clear that my intention of waking up every morning at $4$ is not so irrational, however swimming from Lisbon to Rio is. In contrast to theoretical reasoning, the challenge is there is no world out there to objectively set the reasons as well as the standards of practical reasoning, and even when there is, practical reasoning require not paying heed to it. Another example: consider there is relatively less chance for an individual of certain group to succeed in a philosophy academia (this is a fact of the world), would this factor into the intention of an individual of this group to decide whether to pursue academia. It could, but would it necessarily dictate? No. The individual can decide to pursue academia, and there probably is no irrationality in it. However, the world is also hostile to someone swimming from Lisbon to Rio, but we would reason this intention as irrational. I'm just belabouring the points again and again to actually see difficult is it as a task for the philosophers of practical reasoning to operationalise the rationality of it. The problem stands: where do the reasons come from? (Not from the world, the world can give you the information, but it does not have to dictate the intention) And what is a good standard or machinery for practical reasoning (why does it look that the person forming the intention to pursue academia has maybe not done a super faulty reasoning vs the person with the swimming intention seemingly has).</p>
+
+      <p>The problem is real, and I'll cover it in the next few essays.</p>
+    </article>
+
+    <footer>
+      &larr; <a href="../index.html#blog">Back to all posts</a>
+    </footer>
+  </main>
+</body>
+</html>
