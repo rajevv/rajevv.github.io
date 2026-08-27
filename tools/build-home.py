@@ -214,15 +214,6 @@ CSS = '''
 
     .stream-more:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-    /* ── The essay rests at reduced strength until the first scroll ── */
-    /* The children dim rather than the card, so the card stays white. */
-    article > * { transition: opacity 0.6s ease; }
-    article.at-rest > * { opacity: 0.72; }
-
-    @media (prefers-reduced-motion: reduce) {
-      article > * { transition: none; }
-    }
-
     @media (max-width: 1080px) {
       .rail {
         padding-bottom: 16px;
@@ -239,22 +230,6 @@ CSS = '''
         padding-top: 14px;
       }
     }
-'''
-
-SCRIPT = '''
-  <script>
-    // The article loads dimmed and comes up to full strength on the first
-    // scroll. Adding the class from script keeps the page readable with no JS.
-    (function () {
-      var article = document.querySelector('article');
-      if (!article || window.scrollY > 0) return;
-      article.classList.add('at-rest');
-      function wake() { article.classList.remove('at-rest'); }
-      ['scroll', 'wheel', 'touchmove', 'keydown', 'pointerdown'].forEach(function (name) {
-        window.addEventListener(name, wake, { once: true, passive: true });
-      });
-    })();
-  </script>
 '''
 
 
@@ -416,7 +391,6 @@ def build(essay_name, date=None, older=()):
                             % stream, 1)
 
     html = html.replace("  </style>", CSS + "  </style>", 1)
-    html = html.replace("</body>", SCRIPT + "</body>", 1)
 
     OUT.write_text(html)
     print("homepage built from blog/%s (%s)" % (essay_name, title))
