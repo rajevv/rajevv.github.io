@@ -3,55 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Rajeev Verma — PhD Student (ELLIS, AMLab/Delta Lab, UvA)</title>
-
-  <!-- Primary SEO -->
-  <meta name="description" content="Rajeev Verma is an ELLIS PhD student at AMLab/Delta Lab (University of Amsterdam). Research interests include bridging prediction and decision-making, calibration, safe statistics, imprecise probabilities, and possibility theory." />
+  <title>Rajeev Verma &mdash; On Reason</title>
+  <meta name="description" content="— Where do reasons come from?" />
   <link rel="canonical" href="https://rajevv.github.io/" />
-  <meta name="robots" content="index,follow" />
-  <meta name="theme-color" content="#ffffff" />
-
-  <!-- Open Graph (LinkedIn, etc.) -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Rajeev Verma — PhD Student" />
-  <meta property="og:description" content="ELLIS PhD student at AMLab/Delta Lab (UvA). Research: decision-making, calibration, safe statistics, imprecise probabilities." />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="On Reason &mdash; Rajeev Verma" />
+  <meta property="og:description" content="— Where do reasons come from?" />
   <meta property="og:url" content="https://rajevv.github.io/" />
-  <meta property="og:image" content="https://rajevv.github.io/assets/prof_pic.jpg" />
+  <meta property="og:image" content="https://rajevv.github.io/blog/on-reason_figs/lisbon-rooftops.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Rajeev Verma — PhD Student" />
-  <meta name="twitter:description" content="ELLIS PhD student at AMLab/Delta Lab (UvA). Research: decision-making, calibration, safe statistics, imprecise probabilities." />
-  <meta name="twitter:image" content="https://rajevv.github.io/assets/prof_pic.jpg" />
-
-  <!-- Structured data (Person) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Rajeev Verma",
-    "url": "https://rajevv.github.io/",
-    "image": "https://rajevv.github.io/assets/prof_pic.jpg",
-    "email": "mailto:rajeev.ee15@gmail.com",
-    "jobTitle": "PhD Student",
-    "affiliation": [
-      { "@type": "Organization", "name": "ELLIS" },
-      { "@type": "Organization", "name": "University of Amsterdam" }
-    ],
-    "sameAs": [
-      "https://scholar.google.com/citations?hl=en&user=xSgjaZYAAAAJ",
-      "https://github.com/rajevv",
-      "https://twitter.com/RaajeevVerma",
-      "https://www.linkedin.com/in/rajeevee15/"
-    ]
-  }
+  <!-- MathJax -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      },
+      svg: { fontCache: 'global' }
+    };
   </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <link rel="stylesheet" href="assets/site-fonts.css" />
 
   <style>
-    *, *::before, *::after {
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { box-sizing: border-box; }
 
     :root {
       --link: #7a7a7a;
@@ -59,19 +36,19 @@
       --text: #1c1c1c;
       --muted: #6b6b6b;
       --rule: #e4e4e4;
-      --mono: 'SF Mono', 'Menlo', 'Consolas', 'Liberation Mono', monospace;
+      --serif: 'Newsreader', 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+      --mono: 'IBM Plex Mono', 'SF Mono', 'Menlo', 'Consolas', monospace;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
       padding: 0;
-      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-      font-size: 17px;
-      line-height: 1.7;
+      font-family: var(--serif);
+      font-optical-sizing: auto;
+      font-size: 19px;
+      line-height: 1.62;
       color: var(--text);
       background: #ffffff;
       -webkit-font-smoothing: antialiased;
@@ -79,27 +56,36 @@
       text-rendering: optimizeLegibility;
     }
 
-    ::selection {
-      background: #fceecb;
-    }
+    ::selection { background: #fceecb; }
 
     #container {
-      max-width: 760px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 28px 22px 80px;
+      padding: 28px 22px 96px;
+      counter-reset: sidenote-counter;
     }
 
-    /* ── Top navigation ── */
+    /* Keep the reading column narrow; the extra width is the right gutter for sidenotes. */
+    nav.site-nav,
+    article,
+    footer {
+      max-width: 680px;
+    }
+
+    @media (max-width: 1080px) {
+      #container { max-width: 680px; }
+    }
+
     nav.site-nav {
       display: flex;
       flex-wrap: wrap;
       gap: 4px 0;
       align-items: baseline;
       padding-bottom: 14px;
-      margin-bottom: 34px;
+      margin-bottom: 40px;
       border-bottom: 1px solid var(--rule);
       font-family: var(--mono);
-      font-size: 0.9rem;
+      font-size: 0.76rem;
     }
 
     nav.site-nav a {
@@ -107,482 +93,366 @@
       padding: 0 12px;
       border-right: 1px solid var(--rule);
       text-decoration: none;
+      transition: color 0.15s ease;
     }
 
-    nav.site-nav a:hover {
-      color: var(--link-hover);
-    }
-
-    nav.site-nav a:first-child {
-      padding-left: 0;
-    }
-
-    nav.site-nav a:last-child {
-      border-right: none;
-    }
-
-    /* ── Header / intro ── */
-    header {
-      display: flex;
-      align-items: flex-start;
-      gap: 30px;
-      margin-bottom: 8px;
-    }
-
-    .intro {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .intro > p:last-child {
-      margin-bottom: 0;
-    }
-
-    .photo-col {
-      flex-shrink: 0;
-      width: 175px;
-      margin-top: 72px;
-    }
-
-    #photo {
-      width: 175px;
-      height: auto;
-      display: block;
-      border-radius: 2px;
-      border: 1px solid #ececec;
-    }
-
-    .photo-tag {
-      margin: 12px 0 0;
-      font-size: 0.84rem;
-      line-height: 1.45;
-      color: var(--muted);
-      font-style: italic;
-      text-align: center;
-    }
+    nav.site-nav a:first-child { padding-left: 0; }
+    nav.site-nav a:last-child { border-right: none; }
+    nav.site-nav a:hover { color: var(--link-hover); }
 
     h1 {
-      margin: 0 0 6px;
-      font-size: 2rem;
+      font-size: 2.1rem;
       font-weight: 700;
-      letter-spacing: -0.01em;
+      letter-spacing: -0.005em;
+      line-height: 1.18;
+      margin: 0 0 10px;
     }
 
-    .contact-line {
-      margin: 0 0 22px;
+    .post-meta {
       font-family: var(--mono);
-      font-size: 0.88rem;
+      font-size: 0.76rem;
       color: var(--muted);
-    }
-
-    .contact-line a {
-      color: var(--link);
-    }
-
-    .contact-line span.sep {
-      color: #c4c4c4;
-      padding: 0 7px;
-    }
-
-    /* ── Sections ── */
-    section {
-      margin-top: 34px;
-      clear: none;
+      margin: 0 0 40px;
     }
 
     h2 {
-      margin: 0 0 10px;
-      font-size: 1.05rem;
+      font-size: 1.4rem;
       font-weight: 700;
-      letter-spacing: 0;
+      letter-spacing: -0.01em;
+      margin: 2em 0 0.6em;
     }
 
-    h2::before { content: "["; color: var(--muted); font-weight: 400; margin-right: 1px; }
-    h2::after  { content: "]"; color: var(--muted); font-weight: 400; margin-left: 1px; }
+    h3 { font-size: 1.15rem; font-weight: 700; margin: 1.6em 0 0.5em; }
+    h4 { font-size: 1.0rem; font-weight: 700; margin: 1.4em 0 0.4em; }
 
-    p {
-      margin: 0 0 16px;
-    }
+    p { margin: 0 0 1.25em; }
 
-    /* ── Links ── */
     a {
       color: var(--link);
       text-decoration: underline;
       text-underline-offset: 2px;
-      text-decoration-thickness: 1px;
       text-decoration-color: #cfcfcf;
       transition: color 0.15s ease, text-decoration-color 0.15s ease;
     }
 
-    a:hover {
-      color: var(--link-hover);
-      text-decoration-color: currentColor;
+    a:hover { color: var(--link-hover); text-decoration-color: currentColor; }
+
+    strong { font-weight: 700; color: #111; }
+
+    ul, ol { padding-left: 1.4em; margin: 0 0 1.25em; }
+    li { margin-bottom: 0.5em; }
+
+    blockquote {
+      margin: 1.5em 0;
+      padding: 2px 0 2px 18px;
+      border-left: 3px solid var(--rule);
+      color: var(--muted);
+      font-style: italic;
     }
 
-    a:focus-visible {
-      outline: 2px solid #d8c89c;
-      outline-offset: 2px;
-      border-radius: 2px;
+    hr {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 1.3em 0;
     }
 
-    /* Anchored sections land with breathing room */
-    header[id], section[id] {
-      scroll-margin-top: 28px;
+    .math-block {
+      overflow-x: auto;
+      margin: 1.4em 0;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      a, nav.site-nav a, ul.pub-list li, #photo { transition: none; }
-    }
-
-    /* ── Publication list ── */
-    ul.pub-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
-
-    ul.pub-list li {
+    /* ── Tufte-style margin notes ── */
+    .sidenote {
+      float: right;
+      clear: right;
+      width: 240px;
+      margin-right: -270px;
+      margin-top: 0.25rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.8rem;
       line-height: 1.5;
-      padding-left: 16px;
-      border-left: 2px solid #ececec;
-      transition: border-color 0.15s ease;
-    }
-
-    ul.pub-list li:hover {
-      border-left-color: #c9c9c9;
-    }
-
-    .pub-title {
-      display: block;
-      font-weight: 700;
-      color: #1c1c1c;
-      font-size: 1.01rem;
-      margin: 2px 0 3px;
-      text-decoration-color: #bdbdbd;
-    }
-
-    .pub-title:hover {
-      color: #000;
-    }
-
-    .pub-authors {
-      display: block;
-      color: #555;
-      font-size: 0.95rem;
-    }
-
-    .pub-venue {
-      display: block;
+      font-style: normal;
       color: var(--muted);
-      font-size: 0.93rem;
+      position: relative;
     }
 
-    .pub-note {
-      display: block;
-      margin-top: 4px;
+    .sidenote a { color: var(--link); }
+
+    .sidenote-number { counter-increment: sidenote-counter; }
+
+    .sidenote-number::after {
+      content: counter(sidenote-counter);
+      font-size: 0.68rem;
+      position: relative;
+      top: -0.5em;
+      left: 1px;
       color: var(--muted);
+    }
+
+    .sidenote::before {
+      content: counter(sidenote-counter) " ";
+      font-size: 0.68rem;
+      position: relative;
+      top: -0.5em;
+      color: var(--muted);
+    }
+
+    label.sidenote-number { display: inline; cursor: pointer; }
+    input.margin-toggle { display: none; }
+
+    .sidenote-anchor {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: #cfcfcf;
+    }
+
+    @media (max-width: 1080px) {
+      .sidenote { display: none; }
+
+      .margin-toggle:checked + .sidenote {
+        display: block;
+        float: none;
+        width: auto;
+        margin: 1rem 0 1.4rem;
+        padding: 10px 14px;
+        background: #f7f7f5;
+        border-left: 3px solid var(--rule);
+        border-radius: 0 6px 6px 0;
+      }
+    }
+
+    figure {
+      margin: 1.8em 0;
+      text-align: center;
+    }
+
+    figure img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 3px;
+      border: 1px solid #ececec;
+    }
+
+    figcaption {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .lede {
+      text-align: right;
+      font-style: italic;
+      color: var(--muted);
+      margin: -0.4em 0 0;
+    }
+
+    pre {
+      background: #f6f6f4;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 14px 16px;
+      overflow-x: auto;
       font-size: 0.9rem;
     }
 
-    /* ── Regular lists (blog) ── */
-    ul.plain-list {
-      padding-left: 20px;
-      margin: 0;
-    }
-
-    ul.plain-list li {
-      margin-bottom: 12px;
-    }
-
-    .essay-date {
-      font-family: var(--mono);
-      font-size: 0.82rem;
-      color: var(--muted);
-    }
-
-    /* ── Publication sub-headings ── */
-    .pub-subhead {
-      margin: 26px 0 12px;
-      font-size: 0.78rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-    }
-
-    .pub-subhead:first-of-type {
-      margin-top: 4px;
-    }
-
-    /* ── Award badge ── */
-    .award {
-      color: #b45309;
-      font-style: italic;
-    }
-
-    /* ── Service ── */
-    .service-block {
-      margin-bottom: 16px;
-    }
-
-    .service-block strong {
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .indent {
-      padding-left: 1.25em;
-    }
-
-    .top-reviewer {
-      color: #b45309;
-      font-style: italic;
+    .callout {
+      background: #f7f7f5;
+      border: 1px solid var(--rule);
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin: 1.4em 0;
     }
 
     footer {
-      margin-top: 56px;
+      margin-top: 64px;
       padding-top: 16px;
       border-top: 1px solid var(--rule);
-      font-size: 0.82rem;
+      font-size: 0.85rem;
       color: var(--muted);
     }
 
-    footer a {
-      color: var(--muted);
-      text-decoration: underline;
-    }
+    footer a { color: var(--muted); }
 
-    /* ── Mobile ── */
     @media (max-width: 540px) {
-      header {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 0;
-      }
+      body { font-size: 17.5px; }
+      h1 { font-size: 1.7rem; }
+    }
 
-      .photo-col {
-        order: -1;
-        width: auto;
-        margin: 0 auto 20px;
-      }
+    /* ── Right-hand panel ── */
+    article h1 { font-size: 1.45rem; margin-bottom: 14px; }
 
-      #photo {
-        margin: 0 auto;
-        width: 150px;
-      }
+    .post-date {
+      font-size: 0.62em;
+      font-weight: 400;
+      color: var(--muted);
+      white-space: nowrap;
+      margin-left: 0.55em;
+    }
 
-      h1 {
-        font-size: 1.7rem;
-      }
+    /* Line box and offset are tuned so this baseline meets the essay title's. */
+    .rail-name {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.18;
+      margin: -10px 0 7px;
+    }
 
-      .contact-line {
-        text-align: center;
-      }
+    .rail-role {
+      font-size: 0.97rem;
+      line-height: 1.5;
+      color: var(--muted);
+      margin: 0 0 22px;
+    }
 
-      nav.site-nav {
+    .rail-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      padding-top: 20px;
+      border-top: 1px solid var(--rule);
+    }
+
+    .rail-nav a {
+      font-size: 1.07rem;
+      text-decoration: none;
+    }
+
+    .rail-nav a:hover {
+      color: var(--link-hover);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    @media (min-width: 1081px) {
+      #container {
+        display: grid;
+        grid-template-columns: minmax(0, 680px) 284px;
+        gap: 0 88px;
         justify-content: center;
+        align-items: start;
+        max-width: 1096px;
+      }
+
+      article { grid-column: 1; grid-row: 1; }
+
+      .rail {
+        grid-column: 2;
+        grid-row: 1;
+        position: sticky;
+        top: 34px;
+      }
+
+      /* The panel occupies the gutter, so margin notes run inline instead. */
+      .sidenote {
+        float: none;
+        clear: none;
+        width: auto;
+        margin: 1rem 0 1.4rem;
+        padding: 10px 14px;
+        background: #f7f7f5;
+        border-left: 3px solid var(--rule);
+        border-radius: 0 6px 6px 0;
+        display: none;
+      }
+
+      .margin-toggle:checked + .sidenote { display: block; }
+    }
+
+    /* ── The essay rests at reduced strength until the first scroll ── */
+    article { transition: opacity 0.6s ease; }
+    article.at-rest { opacity: 0.72; }
+
+    @media (prefers-reduced-motion: reduce) {
+      article { transition: none; }
+    }
+
+    @media (max-width: 1080px) {
+      .rail {
+        padding-bottom: 16px;
+        margin-bottom: 34px;
+        border-bottom: 1px solid var(--rule);
+      }
+
+      .rail-role { margin-bottom: 14px; }
+
+      .rail-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 7px 18px;
+        padding-top: 14px;
       }
     }
   </style>
+  <meta name="theme-color" content="#ffffff" />
 </head>
 
 <body>
   <main id="container">
-    <nav class="site-nav" aria-label="Site navigation">
-      <a href="#top">Home</a>
-      <a href="#publications">Publications</a>
-      <a href="assets/pdf/CV_updated.pdf">CV</a>
-      <a href="#blog">Essays</a>
-      <a href="#service">Service</a>
-      <a href="https://scholar.google.com/citations?hl=en&user=xSgjaZYAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" rel="noopener noreferrer">Scholar</a>
-    </nav>
+    <aside class="rail" aria-label="Elsewhere on this site">
+      <p class="rail-name">Rajeev Verma</p>
+      <p class="rail-role">PhD Candidate in Machine Learning, University of Amsterdam</p>
+      <nav class="rail-nav" aria-label="Site sections">
+        <a href="about.html#top">About me</a>
+        <a href="about.html#publications">Selected Publications</a>
+        <a href="about.html#blog">Essays</a>
+        <a href="about.html#service">Service</a>
+        <a href="assets/pdf/CV_updated.pdf">CV</a>
+        <a href="https://scholar.google.com/citations?hl=en&amp;user=xSgjaZYAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer">Scholar</a>
+      </nav>
+    </aside>
 
-    <header id="top">
-      <div class="intro">
-      <h1>Rajeev Verma</h1>
+    <article>
+      <h1>On Reason <span class="post-date">August 2026</span></h1>
 
-      <p class="contact-line">
-        PhD Student, AMLab &amp; Delta Lab, University of Amsterdam
-        <br />
-        <a href="mailto:rajeev.ee15@gmail.com">rajeev.ee15@gmail.com</a>
-        <span class="sep">·</span>
-        <a href="https://github.com/rajevv" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <span class="sep">·</span>
-        <a href="https://twitter.com/RaajeevVerma" target="_blank" rel="noopener noreferrer">Twitter</a>
-        <span class="sep">·</span>
-        <a href="https://www.linkedin.com/in/rajeevee15/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      </p>
+      <figure>
+        <img src="blog/on-reason_figs/lisbon-rooftops.jpeg" alt="Rooftops of Lisbon with the Tagus in the background" width="1400" height="883" />
+      </figure>
 
-      <p>
-        I'm an <a href="https://ellis.eu/sites" target="_blank" rel="noopener noreferrer">ELLIS</a> PhD student at the
-        <a href="https://www.uva.nl" target="_blank" rel="noopener noreferrer">University of Amsterdam (UvA)</a>,
-        where I'm a part of the
-        <a href="https://amlab.science.uva.nl" target="_blank" rel="noopener noreferrer">AMLab</a> and
-        <a href="https://ivi.fnwi.uva.nl/uvaboschdeltalab/" target="_blank" rel="noopener noreferrer">Delta Lab</a>.
-        By courtesy, I'm also a part of the
-        <a href="https://ri-lab.org/" target="_blank" rel="noopener noreferrer">Rational Intelligence Lab</a>
-        at <a href="https://cispa.de/en" target="_blank" rel="noopener noreferrer">CISPA Helmholtz Center for Information Security</a>.
-        Previously, I studied Electrical Engineering at the
-        <a href="https://www.iitp.ac.in/" target="_blank" rel="noopener noreferrer">Indian Institute of Technology Patna (IITP)</a>
-        and Artificial Intelligence at the
-        <a href="https://www.uva.nl" target="_blank" rel="noopener noreferrer">University of Amsterdam (UvA)</a>.
-      </p>
+      <p class="lede">&mdash;Where do reasons come from?</p>
 
-      <p>
-        I'm generally interested in bridging the gap between prediction and decision-making, especially in the context of the
-        institutional separation between model designers and decision-makers. I'm also interested in safe statistics, imprecise
-        probabilities, and possibility theory.
-      </p>
+      <hr />
 
-      <p>
-        Previously, I worked on studying the calibration properties of learning to defer (L2D) systems
-        [<a href="https://proceedings.mlr.press/v162/verma22c.html" target="_blank" rel="noopener noreferrer">ICML'22</a>],
-        extending L2D systems to allow for multiple experts
-        [<a href="https://proceedings.mlr.press/v206/verma23a.html" target="_blank" rel="noopener noreferrer">AISTATS'23</a>],
-        and studying the out-of-distribution behavior of L2D systems (in preparation). I also collaborated on a project on the
-        test-time adaption of L2D to new experts
-        [<a href="https://arxiv.org/abs/2403.02683" target="_blank" rel="noopener noreferrer">AISTATS'24</a>].
-      </p>
-      </div>
+      <p>Quite some months ago, I submitted a paper titled &ldquo;Deliberative Prediction&rdquo; (not yet public), however when I did that I did not realise or fully grasp the extent of the topic I was dealing with. I still don't, but the submission led me to random explorations that started with political philosophy, covering probability theory, moral philosophy, and now the question of agency and identity. What started as a random and desperate attempt to understand the full implications of the work, in hindsight turned out to be an extraordinary summer. I've decided to cover these topics in the next few essays.</p>
 
-      <div class="photo-col">
-        <img id="photo" src="assets/prof_pic.jpg" alt="Portrait photo of Rajeev Verma" loading="lazy" />
-        <p class="photo-tag">I bridge philosophy, mathematics, and policy.</p>
-      </div>
-    </header>
+      <p>I'll not give details about the paper (and that is also not the point), but to anyone who has read some philosophy, the title is a misnomer. Prediction and Deliberation covers two different forms of <em>reasoning</em> that cannot be said to go together easily as I've made it so, without alluding to some philosophical baggage that the philosophers have carried along for so long. And hence, in this first part I'll focus on reason, especially theoretical reasoning and practical reasoning.</p>
 
-    <section aria-labelledby="blog" id="blog">
-      <h2>Essays</h2>
-      <ul class="plain-list">
-        <li>
-          <a href="https://decisive-bun-09e.notion.site/Notes-from-the-underground-2cbef9bcc159806c9283d7b91ff3e2e1?source=copy_link"
-             target="_blank" rel="noopener noreferrer">Notes from the underground</a>
-          — a running blog of my most-random thoughts.
-        </li>
-        <li>
-          <span class="essay-date">[Aug 2026]</span>
-          <a href="blog/on-reason.html">On Reason.</a>
-        </li>
-        <li>
-          <span class="essay-date">[Jul 2026]</span>
-          <a href="blog/under-determinism.html">On Under-Determinism.</a>
-        </li>
-        <li>
-          <span class="essay-date">[Dec 2025]</span>
-          <a href="blog/relativistic_uncertainty.html">A relativistic perspective of uncertainty in machine learning.</a>
-          <span class="pub-note"><em>Note:</em> A part of this appeared at the <a href="https://sites.google.com/view/philmlicml26/home" target="_blank" rel="noopener noreferrer">ICML 2026 Workshop on Philosophy Meets Machine Learning: What Counts As Trustworthy?</a>
-            as <a href="https://openreview.net/forum?id=xFWOj1sutQ" target="_blank" rel="noopener noreferrer">A Relativistic Perspective of Reliability in Machine Learning</a>, that was invited for an in-person <span class="award">oral</span> talk.</span>
-        </li>
-        <li>
-          <span class="essay-date">[Nov 2025]</span>
-          <a href="blog/what-are-good-forecasts.html">What are good forecasts?</a>
-        </li>
-        <li>
-          <span class="essay-date">[Jan 2025]</span>
-          <a href="blog/no-sure-loss-calibration-insurance.html">No sure loss, calibration, and insurance.</a>
-        </li>
-      </ul>
-    </section>
+      <p>The movement of Enlightenment back in seventeenth century had people asking big questions like what to believe, and what to do, and to use the facility of reason to do so. For terminology, <em>theoretical reasoning</em> covers the question of what to believe, and <em>practical reasoning</em> concerns with intention. Both beliefs and intentions live in someone's head, and hence the aim is to provide certain guidelines or mechanisms as to what one believes and what one does, is in some sense, rational or guided by proper reasoning. Say I believe that the Earth is not flat: theoretical reasoning will concern with how did I come up to have such a belief, do I have sufficient and justified reasons for that, etc. Or I could believe that the said paper is going to be rejected, again do I have sufficient evidence to do so, and have I engaged in right kind of reasoning to have this belief. Having such answers are important for philosophers, as they can guide people towards better living their life.</p>
 
-    <section aria-labelledby="publications" id="publications">
-      <h2>Selected Publications</h2>
-      <p><em>(* Denotes equal contribution)</em></p>
+      <p>As an example, a person who believes that the Earth is flat could be deemed irrational, and similarly the person who maintain the belief that the paper will be accepted despite all negative scores can be labelled as delusional or optimistic depending on what is the spectrum of the language. A person has to engage in reasoning to acquire such beliefs. <em>Given the facts about the world</em> (and this will be crucial soon), referred to as the evidence, the agent deploys some reasoning machinery to come with up with a belief. And it is not my point to justify it here, but probability and probability theory provides that machinery to represent as well as to reason with evidence. In fact, probability theory in the western Europe, has its origin in thinking about theoretical reasoning. I'll stop here, for now, about the theoretical reasoning, but here is a picture below to keep in mind.</p>
 
-      <h3 class="pub-subhead">Ongoing &amp; Workshop Articles</h3>
-      <ul class="pub-list">
-        <li>
-          <a class="pub-title" href="https://openreview.net/forum?id=QCEYqHijVO" target="_blank" rel="noopener noreferrer">Avoiding the Tragedy of the Commons in AI Regulation via Dynamic Licensing</a>
-          <span class="pub-authors"><u>Rajeev Verma</u>, Anurag Singh, Christian A. Naesseth, Eric Nalisnick, Krikamol Muandet</span>
-          <span class="pub-venue"><a href="https://alimama-tech.github.io/aims-2026/" target="_blank" rel="noopener noreferrer">ICLR 2026 Workshop on AI for Mechanism Design and Strategic Decision Making (AIMS)</a></span>
-        </li>
-        <li>
-          <a class="pub-title" href="assets/pdf/So_What_are_Good_Imprecise_Forecasts_v3.pdf" target="_blank" rel="noopener noreferrer">So What are Good Imprecise Forecasts?</a>
-          <span class="pub-authors"><u>Rajeev Verma</u><sup>*</sup>, Rabanus Derr<sup>*</sup>, Christian A. Naesseth, Volker Fischer, Eric Nalisnick</span>
-          <span class="pub-venue"><a href="https://sites.google.com/view/eiml-eurips2025/home?authuser=0" target="_blank" rel="noopener noreferrer">Workshop on Epistemic Intelligence in Machine Learning (EurIPS 2025)</a></span>
-        </li>
-      </ul>
+      <figure>
+        <img src="blog/on-reason_figs/reasoning-machinery.png" alt="Handwritten diagram: evidence (also reasons) feeding into a box labelled reasoning machinery, with an arrow out to belief" width="728" height="168" loading="lazy" />
+      </figure>
 
-      <h3 class="pub-subhead">Conference Papers &amp; Thesis</h3>
-      <ul class="pub-list">
-        <li>
-          <a class="pub-title" href="https://openreview.net/forum?id=1mQT8PXIy8" target="_blank" rel="noopener noreferrer">Boosting for Predictive Sufficiency</a>
-          <span class="pub-authors">Abbavaram Gowtham Reddy, <u>Rajeev Verma</u>, Celia Rubio-Madrigal, Krikamol Muandet, Rebekka Burkholz</span>
-          <span class="pub-venue">ICLR 2026</span>
-        </li>
+      <p>Say now, on the other hand, I've formed the intention to wake up every morning at $4$ in the morning. As an intention, it is a product of practical reasoning, and as similarly as with the belief, we can ask is this intention somehow rational? What if I have never woken up before $7$ ever once in my life, is the reasoning that led me to have this intention rational. Or consider someone who has the intention to swim from Lisbon to Rio, is the &ldquo;reasoning&rdquo; that got into forming this intention rational?</p>
 
-        <li>
-          <a class="pub-title" href="https://openreview.net/forum?id=tpKhNjoErI" target="_blank" rel="noopener noreferrer">On Continuous Monitoring of Risk Violations under Unknown Shift</a>
-          <span class="pub-authors">Alexander Timans<sup>*</sup>, <u>Rajeev Verma</u><sup>*</sup>, Eric Nalisnick, Christian A. Naesseth</span>
-          <span class="pub-venue">UAI 2025 &middot; <a href="assets/pdf/safe-online-thresholding.pdf" target="_blank" rel="noopener noreferrer">[talk]</a></span>
-        </li>
+      <p>Now here is the puzzle that makes this topic a rich of ore of philosophical work: in contrast to belief (or theoretical reasoning) where it was easy to at-least start thinking of saying something about &ldquo;sound reasoning&rdquo; with the facts and evidence provided by the world, and the resulting belief out of this reasoning machinery again subjected to the evaluation against the world, these things go completely missing when does one start to think about intention, and to set the standards of sound practical reasoning. Yes, I haven't woken up at all before $7$ once in my life, that makes the &ldquo;belief&rdquo; of me waking up at $4$ tomorrow relatively low (that's how the world is), but would that make my &ldquo;intention&rdquo; of waking up tomorrow at $4$ somehow faulty: no, I could just summon a whole lot of will, and can just wake up tomorrow at $4$. What about the intention of swimming from Lisbon to Rio? I like these sentences from the <a href="https://plato.stanford.edu/entries/practical-reason/" target="_blank" rel="noopener noreferrer">SEP article on practical reason</a>:</p>
 
-        <li>
-          <a class="pub-title" href="https://arxiv.org/abs/2412.14142" target="_blank" rel="noopener noreferrer">On Calibration in Multi-Distribution Learning</a>
-          <span class="pub-authors"><u>Rajeev Verma</u>, Volker Fischer, Eric Nalisnick</span>
-          <span class="pub-venue">ACM FAccT 2025</span>
-          <span class="pub-note"><em>Note:</em> Also gave an invited <a href="assets/pdf/LuWSI-talk.pdf" target="_blank" rel="noopener noreferrer">talk</a> at the
-          <a href="https://fm.ls/luwsi2025" target="_blank" rel="noopener noreferrer">2nd Workshop on Learning Under Weakly Structured Information</a>.</span>
-        </li>
+      <blockquote>
+        <p>&ldquo;The intention to go shopping on Wednesday, for instance, is not a state that would or should be abandoned upon ascertaining or confirming that one has not (yet) gone shopping on Wednesday; rather a person with such an intention will ordinarily try to bring the world into alignment with the intention, by going shopping when Wednesday comes around. Intentions are in this way more like an architect's blueprints than like sketches of an already-completed structure (Anscombe 1957; cf. Velleman 1989). Put in terms of an influential and controversially discussed metaphor first introduced by Searle (1983), beliefs have a &lsquo;mind-to-world direction of fit&rsquo;, while intentions seem to have a &lsquo;world-to-mind direction of fit&rsquo; (see Frost 2014 for a critical overview of different accounts of this distinction).&rdquo;</p>
+      </blockquote>
 
-        <li>
-          <a class="pub-title" href="https://arxiv.org/abs/2403.02683" target="_blank" rel="noopener noreferrer">Learning to Defer to a Population: A Meta-Learning Approach</a>
-          <span class="pub-authors">Dharmesh Tailor, Aditya Patra, <u>Rajeev Verma</u>, Putra Manggala, Eric Nalisnick</span>
-          <span class="pub-venue">AISTATS 2024 &middot; <span class="award">Oral, Student paper award (top 1%)</span></span>
-        </li>
+      <p>To give a brief summary of practical reasoning (from what I've gathered), the picture in the case of practical reasoning is not so clear cut as can be drawn in the case of theoretical reasoning. There are two questions: where the reasons come from? And how do we set the standards for good practical reasoning? It is somewhat clear that my intention of waking up every morning at $4$ is not so irrational, however swimming from Lisbon to Rio is. In contrast to theoretical reasoning, the challenge is there is no world out there to objectively set the reasons as well as the standards of practical reasoning, and even when there is, practical reasoning require not paying heed to it. Another example: consider there is relatively less chance for an individual of certain group to succeed in a philosophy academia (this is a fact of the world), would this factor into the intention of an individual of this group to decide whether to pursue academia. It could, but would it necessarily dictate? No. The individual can decide to pursue academia, and there probably is no irrationality in it. However, the world is also hostile to someone swimming from Lisbon to Rio, but we would reason this intention as irrational. I'm just belabouring the points again and again to actually see difficult is it as a task for the philosophers of practical reasoning to operationalise the rationality of it. The problem stands: where do the reasons come from? (Not from the world, the world can give you the information, but it does not have to dictate the intention) And what is a good standard or machinery for practical reasoning (why does it look that the person forming the intention to pursue academia has maybe not done a super faulty reasoning vs the person with the swimming intention seemingly has).</p>
 
-        <li>
-          <a class="pub-title" href="https://proceedings.mlr.press/v206/verma23a.html" target="_blank" rel="noopener noreferrer">Learning to Defer to Multiple Experts: Consistent Surrogate Losses, Confidence Calibration, and Conformal Ensembles</a>
-          <span class="pub-authors"><u>Rajeev Verma</u><sup>*</sup>, Daniel Barrejón<sup>*</sup>, Eric Nalisnick</span>
-          <span class="pub-venue">AISTATS 2023</span>
-          <span class="pub-note"><em>Note:</em> Also appeared at the <a href="https://sites.google.com/view/icml-2022-hmcat/home" target="_blank" rel="noopener noreferrer">ICML 2022 Workshop on Human-Machine Collaboration and Teaming</a>
-          as <a href="https://dbarrejon.github.io/docs/ICML_HMCaT2022.pdf" target="_blank" rel="noopener noreferrer">On the Calibration of Learning to Defer to Multiple Experts</a>.</span>
-        </li>
-
-        <li>
-          <a class="pub-title" href="https://proceedings.mlr.press/v162/verma22c.html" target="_blank" rel="noopener noreferrer">Calibrated Learning to Defer with One-vs-All Classifiers</a>
-          <span class="pub-authors"><u>Rajeev Verma</u>, Eric Nalisnick</span>
-          <span class="pub-venue">ICML 2022</span>
-        </li>
-
-        <li>
-          <a class="pub-title" href="assets/pdf/MScThesis.pdf" target="_blank" rel="noopener noreferrer">On the Calibration of Learning to Defer Systems</a>
-          <span class="pub-authors"><u>Rajeev Verma</u></span>
-          <span class="pub-venue">Master's Thesis 2022 (UvA) &middot;
-            <a href="assets/pdf/ICAI-15thSeptember.pdf" target="_blank" rel="noopener noreferrer">[talk]</a>
-            <a href="https://ivi.uva.nl/content/news/2022/09/ai-learns-when-it-is-safer-to-leave-a-decision-to-a-human-expert.html" target="_blank" rel="noopener noreferrer">[UvA News]</a></span>
-        </li>
-      </ul>
-    </section>
-
-    <section aria-labelledby="service" id="service">
-      <h2>Service</h2>
-
-      <div class="service-block">
-        <strong>Reviewer</strong>
-        <div class="indent">
-          ICML <span class="top-reviewer">(Gold reviewer, 2026)</span>, NeurIPS <span class="top-reviewer">(Top reviewer, 2023)</span>, UAI, ICLR, ACL<br />
-        </div>
-      </div>
-
-      <div class="service-block">
-        <strong>Teaching</strong>
-        <div class="indent">
-          <a href="https://enalisnick.github.io/human_ML.html" target="_blank" rel="noopener noreferrer">Human-in-the-Loop Machine Learning</a> (Teaching Assistant)<br />
-          <a href="https://uvadl2c.github.io/" target="_blank" rel="noopener noreferrer">Deep Learning 2</a> (Teaching Assistant)<br />
-          <a href="https://datanose.nl/Course/Manual/88752/Machine%20Learning%202/2020/" target="_blank" rel="noopener noreferrer">Machine Learning 2</a> (Teaching Assistant)
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      Design adapted from the template by
-      <a href="https://gregorygundersen.com/" target="_blank" rel="noopener noreferrer">Gregory Gundersen</a>.
-    </footer>
+      <p>The problem is real, and I'll cover it in the next few essays.</p>
+    </article>
   </main>
+
+  <script>
+    // The article loads dimmed and comes up to full strength on the first
+    // scroll. Adding the class from script keeps the page readable with no JS.
+    (function () {
+      var article = document.querySelector('article');
+      if (!article || window.scrollY > 0) return;
+      article.classList.add('at-rest');
+      function wake() { article.classList.remove('at-rest'); }
+      ['scroll', 'wheel', 'touchmove', 'keydown', 'pointerdown'].forEach(function (name) {
+        window.addEventListener(name, wake, { once: true, passive: true });
+      });
+    })();
+  </script>
 </body>
 </html>
