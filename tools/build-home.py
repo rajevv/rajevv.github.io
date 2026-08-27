@@ -36,6 +36,11 @@ RAIL = '''    <aside class="rail" aria-label="Elsewhere on this site">
 '''
 
 CSS = '''
+    :root {
+      --ground: #eaeaea;
+      --card-edge: #dcdcdc;
+    }
+
     /* ── Right-hand panel ── */
     article h1 { font-size: 1.45rem; margin-bottom: 14px; }
 
@@ -85,20 +90,24 @@ CSS = '''
     @media (min-width: 1081px) {
       #container {
         display: grid;
-        grid-template-columns: minmax(0, 680px) 284px;
+        grid-template-columns: minmax(0, 728px) 284px;
         gap: 0 88px;
         justify-content: center;
         align-items: start;
-        max-width: 1096px;
+        max-width: 1144px;
       }
 
-      article { grid-column: 1; grid-row: 1; }
+      /* The base stylesheet caps the article at 680px; the column governs here. */
+      article { grid-column: 1; grid-row: 1; max-width: none; }
+      .stream { grid-column: 1; grid-row: 2; }
 
       .rail {
         grid-column: 2;
-        grid-row: 1;
+        grid-row: 1 / span 2;
         position: sticky;
         top: 34px;
+        /* Clears the card's top padding, so the name meets the title's baseline. */
+        margin-top: 45px;
       }
 
       /* The panel occupies the gutter, so margin notes run inline instead. */
@@ -117,12 +126,102 @@ CSS = '''
       .margin-toggle:checked + .sidenote { display: block; }
     }
 
+    /* ── The feed: each post its own card on a tinted ground ── */
+    body { background: var(--ground); }
+
+    article,
+    .stream-item {
+      background: #ffffff;
+      border: 1px solid var(--card-edge);
+      border-radius: 5px;
+      padding: 38px 44px 30px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    /* An excerpt card answers the pointer, since the whole post leads away. */
+    .stream-item {
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .stream-item:hover {
+      border-color: #cbcbcb;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), 0 10px 26px rgba(0, 0, 0, 0.04);
+    }
+
+    ::selection { background: #dde3e8; }
+
+    /* The card frames the photograph, so the photograph drops its own frame. */
+    article figure img {
+      border: none;
+      border-radius: 4px;
+    }
+
+    /* A short centred rule instead of a full-width one. */
+    article hr {
+      width: 54px;
+      margin: 26px auto 32px;
+      border-top: 1px solid #d2d2d2;
+    }
+
+    .stream { max-width: 728px; }
+    .stream-item { margin-top: 26px; }
+    .stream-label { display: none; }
+
+    article figure { margin: 26px 0 30px; }
+
+    article figure img { width: 100%; }
+
+    /* On a narrow screen the cards run the full width, as a feed does. */
+    @media (max-width: 620px) {
+      #container { padding-left: 0; padding-right: 0; }
+
+      article,
+      .stream-item {
+        padding: 26px 22px 22px;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+      }
+
+      .stream-item { margin-top: 18px; }
+
+      .rail { padding: 0 22px; }
+    }
+
+    .stream-item h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 0 0 14px;
+    }
+
+    .stream-item h2 a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .stream-item h2 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    .stream-lede {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .stream-more {
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    .stream-more:hover { text-decoration: underline; text-underline-offset: 3px; }
+
     /* ── The essay rests at reduced strength until the first scroll ── */
-    article { transition: opacity 0.6s ease; }
-    article.at-rest { opacity: 0.72; }
+    /* The children dim rather than the card, so the card stays white. */
+    article > * { transition: opacity 0.6s ease; }
+    article.at-rest > * { opacity: 0.72; }
+    article.at-rest > figure { opacity: 0.85; }
 
     @media (prefers-reduced-motion: reduce) {
-      article { transition: none; }
+      article > * { transition: none; }
     }
 
     @media (max-width: 1080px) {
@@ -183,7 +282,92 @@ def essay_entries():
     return entries
 
 
-def build(essay_name, date=None):
+
+VOID_TAGS = {"br", "img", "hr", "input", "meta", "link"}
+
+
+def clip_html(fragment, budget):
+    """Cut a paragraph's HTML at the first sentence end past `budget` words.
+
+    Tags are tracked so the fragment closes cleanly, and a cut is never taken
+    inside a $...$ math span.
+    """
+    out, open_tags, words, done = [], [], 0, False
+    for token in re.findall(r"<[^>]+>|[^<]+", fragment):
+        if done:
+            break
+        if token.startswith("<"):
+            out.append(token)
+            name = re.match(r"</?\s*([A-Za-z0-9]+)", token)
+            if name:
+                tag = name.group(1).lower()
+                if token.startswith("</"):
+                    if tag in open_tags:
+                        open_tags.remove(tag)
+                elif tag not in VOID_TAGS and not token.endswith("/>"):
+                    open_tags.append(tag)
+            continue
+        piece = ""
+        for chunk in re.split(r"(\s+)", token):
+            piece += chunk
+            if chunk.strip():
+                words += 1
+            if words >= budget and re.search(r"[.?!][\"\u201d\u2019)]?\s*$", piece):
+                if piece.count("$") % 2 == 0:      # never stop inside math
+                    done = True
+                    break
+        out.append(piece)
+    text = "".join(out)
+    if done:
+        text = text.rstrip()
+        # The cut lands on a full stop, which the ellipsis replaces.
+        text = (text[:-1] if text.endswith(".") else text) + "&hellip;"
+    for tag in reversed(open_tags):
+        text += "</%s>" % tag
+    return text, done
+
+
+def excerpt(essay_name, date, budget=150):
+    """Title, subtitle line and roughly `budget` words of an older essay."""
+    html = (ROOT / "blog" / essay_name).read_text()
+    title = re.search(r"<h1>(.*?)</h1>", html).group(1)
+
+    body = html.split("</h1>", 1)[1]
+    body = re.sub(r"<figure.*?</figure>", "", body, flags=re.S)
+    body = re.sub(r"<blockquote.*?</blockquote>", "", body, flags=re.S)
+    # Margin notes belong to the essay page, so the excerpt drops their machinery.
+    body = re.sub(r'<span class="sidenote">.*?</span>', "", body, flags=re.S)
+    body = re.sub(r"<label[^>]*>.*?</label>|<input[^>]*/?>", "", body, flags=re.S)
+
+    lede, paras, words = "", [], 0
+    for tag, inner in re.findall(r"<p([^>]*)>(.*?)</p>", body, re.S):
+        if any(c in tag for c in ("post-meta", "author", "pdf-notice")):
+            continue
+        text = inner.strip()
+        if not text:
+            continue
+        if not paras and not lede and re.fullmatch(r"<em>.*</em>", text, re.S):
+            lede = text
+            continue
+        clipped, stop = clip_html(text, max(0, budget - words))
+        words += len(re.findall(r"\S+", re.sub(r"<[^>]+>", " ", clipped)))
+        paras.append(clipped)
+        if stop or words >= budget:
+            break
+
+    parts = ['    <section class="stream-item">',
+             '      <h2><a href="blog/%s">%s</a>'
+             '<span class="post-date">%s</span></h2>' % (essay_name, title, date)]
+    if lede:
+        parts.append("      <p class=\"stream-lede\">%s</p>" % lede)
+    parts += ["      <p>%s</p>" % t for t in paras]
+    parts.append('      <p><a class="stream-more" href="blog/%s">'
+                 'Continue reading &rarr;</a></p>' % essay_name)
+    parts.append("    </section>")
+    return "\n".join(parts)
+
+
+def build(essay_name, date=None, older=()):
     essay = ROOT / "blog" / essay_name
     html = essay.read_text()
     stem = essay.stem
@@ -225,6 +409,13 @@ def build(essay_name, date=None):
     # Whatever else the essay links relative to blog/ is one level up from here.
     html = html.replace('"../', '"')
 
+    if older:
+        stream = "\n".join(excerpt(name, when) for name, when in older)
+        html = html.replace("    </article>\n",
+                            '    </article>\n\n    <div class="stream">\n'
+                            '      <p class="stream-label">Earlier</p>\n%s\n    </div>\n'
+                            % stream, 1)
+
     html = html.replace("  </style>", CSS + "  </style>", 1)
     html = html.replace("</body>", SCRIPT + "</body>", 1)
 
@@ -239,4 +430,4 @@ if __name__ == "__main__":
         date = dict(entries).get(wanted)
         build(wanted, date)
     else:
-        build(*entries[0])
+        build(entries[0][0], entries[0][1], older=entries[1:])

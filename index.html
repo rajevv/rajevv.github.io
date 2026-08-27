@@ -31,7 +31,7 @@
     *, *::before, *::after { box-sizing: border-box; }
 
     :root {
-      --link: #7a7a7a;
+      --link: #666666;
       --link-hover: #111;
       --text: #1c1c1c;
       --muted: #6b6b6b;
@@ -280,6 +280,11 @@
       h1 { font-size: 1.7rem; }
     }
 
+    :root {
+      --ground: #eaeaea;
+      --card-edge: #dcdcdc;
+    }
+
     /* ── Right-hand panel ── */
     article h1 { font-size: 1.45rem; margin-bottom: 14px; }
 
@@ -329,20 +334,24 @@
     @media (min-width: 1081px) {
       #container {
         display: grid;
-        grid-template-columns: minmax(0, 680px) 284px;
+        grid-template-columns: minmax(0, 728px) 284px;
         gap: 0 88px;
         justify-content: center;
         align-items: start;
-        max-width: 1096px;
+        max-width: 1144px;
       }
 
-      article { grid-column: 1; grid-row: 1; }
+      /* The base stylesheet caps the article at 680px; the column governs here. */
+      article { grid-column: 1; grid-row: 1; max-width: none; }
+      .stream { grid-column: 1; grid-row: 2; }
 
       .rail {
         grid-column: 2;
-        grid-row: 1;
+        grid-row: 1 / span 2;
         position: sticky;
         top: 34px;
+        /* Clears the card's top padding, so the name meets the title's baseline. */
+        margin-top: 45px;
       }
 
       /* The panel occupies the gutter, so margin notes run inline instead. */
@@ -361,12 +370,102 @@
       .margin-toggle:checked + .sidenote { display: block; }
     }
 
+    /* ── The feed: each post its own card on a tinted ground ── */
+    body { background: var(--ground); }
+
+    article,
+    .stream-item {
+      background: #ffffff;
+      border: 1px solid var(--card-edge);
+      border-radius: 5px;
+      padding: 38px 44px 30px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+    }
+
+    /* An excerpt card answers the pointer, since the whole post leads away. */
+    .stream-item {
+      transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .stream-item:hover {
+      border-color: #cbcbcb;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), 0 10px 26px rgba(0, 0, 0, 0.04);
+    }
+
+    ::selection { background: #dde3e8; }
+
+    /* The card frames the photograph, so the photograph drops its own frame. */
+    article figure img {
+      border: none;
+      border-radius: 4px;
+    }
+
+    /* A short centred rule instead of a full-width one. */
+    article hr {
+      width: 54px;
+      margin: 26px auto 32px;
+      border-top: 1px solid #d2d2d2;
+    }
+
+    .stream { max-width: 728px; }
+    .stream-item { margin-top: 26px; }
+    .stream-label { display: none; }
+
+    article figure { margin: 26px 0 30px; }
+
+    article figure img { width: 100%; }
+
+    /* On a narrow screen the cards run the full width, as a feed does. */
+    @media (max-width: 620px) {
+      #container { padding-left: 0; padding-right: 0; }
+
+      article,
+      .stream-item {
+        padding: 26px 22px 22px;
+        border-left: none;
+        border-right: none;
+        border-radius: 0;
+      }
+
+      .stream-item { margin-top: 18px; }
+
+      .rail { padding: 0 22px; }
+    }
+
+    .stream-item h2 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      line-height: 1.25;
+      margin: 0 0 14px;
+    }
+
+    .stream-item h2 a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .stream-item h2 a:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+    .stream-lede {
+      font-style: italic;
+      color: var(--muted);
+    }
+
+    .stream-more {
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+
+    .stream-more:hover { text-decoration: underline; text-underline-offset: 3px; }
+
     /* ── The essay rests at reduced strength until the first scroll ── */
-    article { transition: opacity 0.6s ease; }
-    article.at-rest { opacity: 0.72; }
+    /* The children dim rather than the card, so the card stays white. */
+    article > * { transition: opacity 0.6s ease; }
+    article.at-rest > * { opacity: 0.72; }
+    article.at-rest > figure { opacity: 0.85; }
 
     @media (prefers-reduced-motion: reduce) {
-      article { transition: none; }
+      article > * { transition: none; }
     }
 
     @media (max-width: 1080px) {
@@ -439,6 +538,35 @@
 
       <p>The problem is real, and I'll cover it in the next few essays.</p>
     </article>
+
+    <div class="stream">
+      <p class="stream-label">Earlier</p>
+    <section class="stream-item">
+      <h2><a href="blog/under-determinism.html">On Under-Determinism</a><span class="post-date">July 2026</span></h2>
+      <p class="stream-lede"><em>— or why a cowboy must get off the horse, and talk.</em></p>
+      <p>For some time now, I've been feeling there is a quite a lot of difference between statistical way of thinking about learning vs the actual practice of machine learning. It has been to the point that I think statistical way is misleading and gives a wrong picture of the field. This note is an attempt to verbalise this feeling rather properly. I'll also talk about randomness, and aleatoric and epistemic dichotomy, and an argument why we need to abandon this terminology (or rather abandon the source of this dichotomy), and replace it what I call under-determinism. Finally, I'll lift my argument (or rather it'll naturally be lifted) to the broader AI alignment and ethics discourse.</p>
+      <p>Let's start with the definitions first, and I'll distinguish between statistical way of thinking about learning and actual machine learning way of thinking about learning. To illustrate what I mean by learning, consider the simple task of predicting the risk of a certain disease in individuals from certain population&hellip;</p>
+      <p><a class="stream-more" href="blog/under-determinism.html">Continue reading &rarr;</a></p>
+    </section>
+    <section class="stream-item">
+      <h2><a href="blog/relativistic_uncertainty.html">A Relativistic Perspective of Uncertainty in Machine Learning</a><span class="post-date">December 2025</span></h2>
+      <p>My confusion emerges from how do we mathematically operationalize reliability in the sense of uncertainty, because of course the goal is to define some measure as a signal of reliability. Now obviously, this is my own confusion (and one might have different way of thinking about these things, and also some justification for it), but I just came from a workshop on the <a href="https://sites.google.com/view/eiml-eurips2025/home?authuser=0">Epistemic Intelligence in Machine Learning at EurIPS</a>, and I believe believe everyone is equally confused with something. Or to say it differently, the whole business of thinking about uncertainty in machine learning is not so clear-cut: one is usually facing the very first hurdle of answering what does it mean to quantify uncertainty in machine learning? I don't think I can answer this question, but I'll do just enough work to put some my own confusion at ease.</p>
+      <p>A standard formalization of machine learning (which can also be extended to think of uncertainty quantification) is that there is some data-generating distribution, and the data is sampled from this distribution&hellip;</p>
+      <p><a class="stream-more" href="blog/relativistic_uncertainty.html">Continue reading &rarr;</a></p>
+    </section>
+    <section class="stream-item">
+      <h2><a href="blog/what-are-good-forecasts.html">What are good forecasts?</a><span class="post-date">November 2025</span></h2>
+      <p class="stream-lede"><em>— There are no good forecasts, or every forecast is good.</em></p>
+      <p>A casual google search will suggest there is an extensive amount of research and thought went into answering this very question. However, lately I’ve thought of a different question that isn’t asked that extensively in the machine learning setting: what are good “imprecise” forecasts. I don’t have the complete answer yet, but in the process I might have some words to add to the age-old question of what are good forecasts?</p>
+      <p>First of all, what is a forecast? Given any uncertain event, like rain tomorrow, or the stock price the day after tomorrow—these are the events that haven’t happened yet. Yet we’d want to plan a certain course of action to prepare for them. So to plan ahead, one can refer to the forecasts that are issued ahead of time like, what is the chance of rain tomorrow? We assume a forecaster who converts historical and current information into forecasts, and we’re concerned with if someone is a good forecaster?&hellip;</p>
+      <p><a class="stream-more" href="blog/what-are-good-forecasts.html">Continue reading &rarr;</a></p>
+    </section>
+    <section class="stream-item">
+      <h2><a href="blog/no-sure-loss-calibration-insurance.html">No sure loss, calibration, and insurance</a><span class="post-date">January 2025</span></h2>
+      <p>The field of machine learning is rife with uncertainty quantification. In fact, the standard approach to prediction is based on quantifying the confidence over the space of possible outcomes, e.g. the confidence over the whole space of vocabulary for the next token prediction in text generation. Despite the wider scope of quantifying uncertainty in machine learning pipelines, the consensus over what defines a good notion of uncertainty remains an unsettled topic. Calibration, in my limited viewpoint, takes the cake of a super simple, highly minimal, and yet very powerful notion of uncertainty quantification. And maybe this is the reason that it has remained an object of study among machine learning practitioners for years. Despite the promise and the popularity of calibration, I’ve always felt a tinge of discomfort every time I’ve heard or read about it. In this note, I’ll try to articulate why it could have been like that, and why this should not be the case&hellip;</p>
+      <p><a class="stream-more" href="blog/no-sure-loss-calibration-insurance.html">Continue reading &rarr;</a></p>
+    </section>
+    </div>
   </main>
 
   <script>
