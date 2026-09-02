@@ -3,15 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rajeev Verma &mdash; So What Is a Normatively Incompetent Agent?</title>
+  <title>So what is a normatively incompetent agent? — Rajeev Verma</title>
   <meta name="description" content="— give me a reason, why I ought to be kind to others." />
-  <link rel="canonical" href="https://rajevv.github.io/" />
-  <meta property="og:type" content="article" />
-  <meta property="og:title" content="So what is a normatively incompetent agent? &mdash; Rajeev Verma" />
-  <meta property="og:description" content="— give me a reason, why I ought to be kind to others." />
-  <meta property="og:url" content="https://rajevv.github.io/" />
-  <meta property="og:image" content="https://rajevv.github.io/blog/normatively-incompetent-agent_figs/lisbon-rooftops.jpeg" />
-  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://rajevv.github.io/blog/normatively-incompetent-agent.html" />
 
   <!-- MathJax -->
   <script>
@@ -25,7 +19,7 @@
   </script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
-  <link rel="stylesheet" href="assets/site-fonts.css" />
+  <link rel="stylesheet" href="../assets/site-fonts.css" />
 
   <style>
     *, *::before, *::after { box-sizing: border-box; }
@@ -282,232 +276,30 @@
       body { font-size: 17.5px; }
       h1 { font-size: 1.7rem; }
     }
-
-    :root {
-      --ground: #eaeaea;
-      --card-edge: #dcdcdc;
-    }
-
-    /* ── Right-hand panel ── */
-    article h1 { font-size: 1.45rem; margin-bottom: 14px; }
-
-    .post-date {
-      font-size: 0.62em;
-      font-weight: 400;
-      color: var(--muted);
-      white-space: nowrap;
-      margin-left: 0.55em;
-    }
-
-    /* Line box and offset are tuned so this baseline meets the essay title's. */
-    .rail-name {
-      font-size: 1.75rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      line-height: 1.18;
-      margin: -10px 0 7px;
-    }
-
-    .rail-role {
-      font-size: 0.97rem;
-      line-height: 1.5;
-      color: var(--muted);
-      margin: 0 0 22px;
-    }
-
-    .rail-nav {
-      display: flex;
-      flex-direction: column;
-      gap: 13px;
-      padding-top: 20px;
-      border-top: 1px solid var(--rule);
-    }
-
-    .rail-nav a {
-      font-size: 1.07rem;
-      text-decoration: none;
-    }
-
-    .rail-nav a:hover {
-      color: var(--link-hover);
-      text-decoration: underline;
-      text-underline-offset: 2px;
-    }
-
-    @media (min-width: 1081px) {
-      #container {
-        display: grid;
-        grid-template-columns: minmax(0, 728px) 284px;
-        gap: 0 88px;
-        justify-content: center;
-        align-items: start;
-        max-width: 1144px;
-      }
-
-      /* The base stylesheet caps the article at 680px; the column governs here. */
-      article { grid-column: 1; grid-row: 1; max-width: none; }
-      .stream { grid-column: 1; grid-row: 2; }
-
-      .rail {
-        grid-column: 2;
-        grid-row: 1 / span 2;
-        position: sticky;
-        top: 34px;
-        /* Clears the card's top padding, so the name meets the title's baseline. */
-        margin-top: 45px;
-      }
-
-      /* The panel occupies the gutter, so margin notes run inline instead. */
-      .sidenote {
-        float: none;
-        clear: none;
-        width: auto;
-        margin: 1rem 0 1.4rem;
-        padding: 10px 14px;
-        background: #f7f7f5;
-        border-left: 3px solid var(--rule);
-        border-radius: 0 6px 6px 0;
-        display: none;
-      }
-
-      .margin-toggle:checked + .sidenote { display: block; }
-    }
-
-    /* ── The feed: each post its own card on a tinted ground ── */
-    body { background: var(--ground); }
-
-    article,
-    .stream-item {
-      background: #ffffff;
-      border: 1px solid var(--card-edge);
-      border-radius: 5px;
-      padding: 38px 44px 30px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-    }
-
-    /* An excerpt card answers the pointer, since the whole post leads away. */
-    .stream-item {
-      transition: border-color 0.18s ease, box-shadow 0.18s ease;
-    }
-
-    .stream-item:hover {
-      border-color: #cbcbcb;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05), 0 10px 26px rgba(0, 0, 0, 0.04);
-    }
-
-    ::selection { background: #dde3e8; }
-
-    /* The card frames the photograph, so the photograph drops its own frame. */
-    article figure img {
-      border: none;
-      border-radius: 4px;
-    }
-
-    /* A short centred rule instead of a full-width one. */
-    article hr {
-      width: 54px;
-      margin: 26px auto 32px;
-      border-top: 1px solid #d2d2d2;
-    }
-
-    .stream { max-width: 728px; }
-    .stream-item { margin-top: 26px; }
-    .stream-label { display: none; }
-
-    article figure { margin: 26px 0 30px; }
-
-    article figure img { width: 100%; }
-
-    /* On a narrow screen the cards run the full width, as a feed does. */
-    @media (max-width: 620px) {
-      #container { padding-left: 0; padding-right: 0; }
-
-      article,
-      .stream-item {
-        padding: 26px 22px 22px;
-        border-left: none;
-        border-right: none;
-        border-radius: 0;
-      }
-
-      .stream-item { margin-top: 18px; }
-
-      .rail { padding: 0 22px; }
-    }
-
-    .stream-item h2 {
-      font-size: 1.3rem;
-      font-weight: 700;
-      line-height: 1.25;
-      margin: 0 0 14px;
-    }
-
-    .stream-item h2 a {
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .stream-item h2 a:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-    .stream-lede {
-      font-style: italic;
-      color: var(--muted);
-    }
-
-    .stream-more {
-      font-size: 0.95rem;
-      text-decoration: none;
-    }
-
-    .stream-more:hover { text-decoration: underline; text-underline-offset: 3px; }
-
-    @media (max-width: 1080px) {
-      .rail {
-        padding-bottom: 16px;
-        margin-bottom: 34px;
-        border-bottom: 1px solid var(--rule);
-      }
-
-      .rail-role { margin-bottom: 14px; }
-
-      .rail-nav {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 7px 18px;
-        padding-top: 14px;
-      }
-    }
   </style>
   <meta name="theme-color" content="#ffffff" />
 </head>
 
 <body>
   <main id="container">
-    <aside class="rail" aria-label="Elsewhere on this site">
-      <p class="rail-name">Rajeev Verma</p>
-      <p class="rail-role">PhD Candidate in Machine Learning, University of Amsterdam</p>
-      <nav class="rail-nav" aria-label="Site sections">
-        <a href="about.html#top">About me</a>
-        <a href="about.html#publications">Selected Publications</a>
-        <a href="about.html#blog">Essays</a>
-        <a href="about.html#service">Service</a>
-        <a href="assets/pdf/CV_updated.pdf">CV</a>
-        <a href="https://scholar.google.com/citations?hl=en&amp;user=xSgjaZYAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer">Scholar</a>
-      </nav>
-    </aside>
+    <nav class="site-nav" aria-label="Site navigation">
+      <a href="../about.html#blog">&larr; Back to blog</a>
+      <a href="../index.html">Home</a>
+    </nav>
 
     <article>
-      <h1>So what is a normatively incompetent agent? <span class="post-date">September 2026</span></h1>
+      <h1>So what is a normatively incompetent agent?</h1>
+      <p class="post-meta">Rajeev Verma &middot; Essays</p>
 
       <figure>
-        <img src="blog/normatively-incompetent-agent_figs/lisbon-rooftops.jpeg" alt="Rooftops of Lisbon with the Tagus in the background" width="1400" height="883" />
+        <img src="normatively-incompetent-agent_figs/lisbon-rooftops.jpeg" alt="Rooftops of Lisbon with the Tagus in the background" width="1400" height="883" />
       </figure>
 
       <p class="lede">&mdash;give me a reason, why I ought to be kind to others.</p>
 
       <hr />
 
-      <p>Following from the <a href="blog/on-reason.html">last essay</a>, I'll talk about practical reasoning. The goal of this essay is to elaborate on some of the terms (and the relation between them) that come up in the literature on practical reasoning. These terms are normative, normativity, and agency, and what does being normatively competent mean? However, I'm rather more curious as to what does being normatively incompetent look like? Now I don't have any academic scholarship in philosophy, and that is why I'm thinking out loud. But whatever I'll say next has been heavily influenced by Prof. Christine Korsgaard and her, what I think, two excellent books &ldquo;Sources of Normativity&rdquo; and &ldquo;Self-Constitution: Agency, Identity, and Integrity.&rdquo; At a very high-level, Christine Korsgaard situates the normativity of normative claims in the agency and the autonomy of the agents. Before proceeding further, I'll put these two paragraphs as to how decisively she puts the counter argument that could come from determinism, or the complicated relationship between prediction and deliberation that came up in the last essay, and is the main reason as to how I ended up here.</p>
+      <p>Following from the <a href="on-reason.html">last essay</a>, I'll talk about practical reasoning. The goal of this essay is to elaborate on some of the terms (and the relation between them) that come up in the literature on practical reasoning. These terms are normative, normativity, and agency, and what does being normatively competent mean? However, I'm rather more curious as to what does being normatively incompetent look like? Now I don't have any academic scholarship in philosophy, and that is why I'm thinking out loud. But whatever I'll say next has been heavily influenced by Prof. Christine Korsgaard and her, what I think, two excellent books &ldquo;Sources of Normativity&rdquo; and &ldquo;Self-Constitution: Agency, Identity, and Integrity.&rdquo; At a very high-level, Christine Korsgaard situates the normativity of normative claims in the agency and the autonomy of the agents. Before proceeding further, I'll put these two paragraphs as to how decisively she puts the counter argument that could come from determinism, or the complicated relationship between prediction and deliberation that came up in the last essay, and is the main reason as to how I ended up here.</p>
 
       <blockquote>
         <p>&ldquo;But how can this be a problem? The afternoon stretches before me, and I must decide whether to work or to play. Suppose first that you can predict which one I am going to do. That has no effect on me at all: I must still decide what to do. I am tempted to play but worried about work, and I must decide the case on its merits. Suppose next I believe that you can predict which one I'm going to do. You've done it often enough before. What then? I am tempted by play but worried about work, and I must decide the case on its merits.</p>
@@ -594,41 +386,9 @@
       <p>If you cannot fail to be kind, then it is not clear in what sense you ought to be kind.</p>
     </article>
 
-    <div class="stream">
-      <p class="stream-label">Earlier</p>
-    <section class="stream-item">
-      <h2><a href="blog/on-reason.html">On Reason</a><span class="post-date">August 2026</span></h2>
-      <p class="stream-lede"><em>— Where do reasons come from?</em></p>
-      <p>Quite some months ago, I submitted a paper titled &ldquo;Deliberative Prediction&rdquo; (not yet public), however when I did that I did not realise or fully grasp the extent of the topic I was dealing with. I still don't, but the submission led me to random explorations that started with political philosophy, covering probability theory, moral philosophy, and now the question of agency and identity. What started as a random and desperate attempt to understand the full implications of the work, in hindsight turned out to be an extraordinary summer. I've decided to cover these topics in the next few essays.</p>
-      <p>The movement of Enlightenment back in seventeenth century had people asking big questions like what to believe, and what to do, and to use the facility of reason to do so. For terminology, <em>theoretical reasoning</em> covers the question of what to believe, and <em>practical reasoning</em> concerns with intention. Both beliefs and intentions live in someone's head, and hence the aim is to provide certain guidelines or mechanisms as to what one believes and what one does, is in some sense, rational or guided by proper reasoning&hellip;</p>
-      <p><a class="stream-more" href="blog/on-reason.html">Continue reading &rarr;</a></p>
-    </section>
-    <section class="stream-item">
-      <h2><a href="blog/under-determinism.html">On Under-Determinism</a><span class="post-date">July 2026</span></h2>
-      <p class="stream-lede"><em>— or why a cowboy must get off the horse, and talk.</em></p>
-      <p>For some time now, I've been feeling there is a quite a lot of difference between statistical way of thinking about learning vs the actual practice of machine learning. It has been to the point that I think statistical way is misleading and gives a wrong picture of the field. This note is an attempt to verbalise this feeling rather properly. I'll also talk about randomness, and aleatoric and epistemic dichotomy, and an argument why we need to abandon this terminology (or rather abandon the source of this dichotomy), and replace it what I call under-determinism. Finally, I'll lift my argument (or rather it'll naturally be lifted) to the broader AI alignment and ethics discourse.</p>
-      <p>Let's start with the definitions first, and I'll distinguish between statistical way of thinking about learning and actual machine learning way of thinking about learning. To illustrate what I mean by learning, consider the simple task of predicting the risk of a certain disease in individuals from certain population&hellip;</p>
-      <p><a class="stream-more" href="blog/under-determinism.html">Continue reading &rarr;</a></p>
-    </section>
-    <section class="stream-item">
-      <h2><a href="blog/relativistic_uncertainty.html">A Relativistic Perspective of Uncertainty in Machine Learning</a><span class="post-date">December 2025</span></h2>
-      <p>My confusion emerges from how do we mathematically operationalize reliability in the sense of uncertainty, because of course the goal is to define some measure as a signal of reliability. Now obviously, this is my own confusion (and one might have different way of thinking about these things, and also some justification for it), but I just came from a workshop on the <a href="https://sites.google.com/view/eiml-eurips2025/home?authuser=0">Epistemic Intelligence in Machine Learning at EurIPS</a>, and I believe believe everyone is equally confused with something. Or to say it differently, the whole business of thinking about uncertainty in machine learning is not so clear-cut: one is usually facing the very first hurdle of answering what does it mean to quantify uncertainty in machine learning? I don't think I can answer this question, but I'll do just enough work to put some my own confusion at ease.</p>
-      <p>A standard formalization of machine learning (which can also be extended to think of uncertainty quantification) is that there is some data-generating distribution, and the data is sampled from this distribution&hellip;</p>
-      <p><a class="stream-more" href="blog/relativistic_uncertainty.html">Continue reading &rarr;</a></p>
-    </section>
-    <section class="stream-item">
-      <h2><a href="blog/what-are-good-forecasts.html">What are good forecasts?</a><span class="post-date">November 2025</span></h2>
-      <p class="stream-lede"><em>— There are no good forecasts, or every forecast is good.</em></p>
-      <p>A casual google search will suggest there is an extensive amount of research and thought went into answering this very question. However, lately I’ve thought of a different question that isn’t asked that extensively in the machine learning setting: what are good “imprecise” forecasts. I don’t have the complete answer yet, but in the process I might have some words to add to the age-old question of what are good forecasts?</p>
-      <p>First of all, what is a forecast? Given any uncertain event, like rain tomorrow, or the stock price the day after tomorrow—these are the events that haven’t happened yet. Yet we’d want to plan a certain course of action to prepare for them. So to plan ahead, one can refer to the forecasts that are issued ahead of time like, what is the chance of rain tomorrow? We assume a forecaster who converts historical and current information into forecasts, and we’re concerned with if someone is a good forecaster?&hellip;</p>
-      <p><a class="stream-more" href="blog/what-are-good-forecasts.html">Continue reading &rarr;</a></p>
-    </section>
-    <section class="stream-item">
-      <h2><a href="blog/no-sure-loss-calibration-insurance.html">No sure loss, calibration, and insurance</a><span class="post-date">January 2025</span></h2>
-      <p>The field of machine learning is rife with uncertainty quantification. In fact, the standard approach to prediction is based on quantifying the confidence over the space of possible outcomes, e.g. the confidence over the whole space of vocabulary for the next token prediction in text generation. Despite the wider scope of quantifying uncertainty in machine learning pipelines, the consensus over what defines a good notion of uncertainty remains an unsettled topic. Calibration, in my limited viewpoint, takes the cake of a super simple, highly minimal, and yet very powerful notion of uncertainty quantification. And maybe this is the reason that it has remained an object of study among machine learning practitioners for years. Despite the promise and the popularity of calibration, I’ve always felt a tinge of discomfort every time I’ve heard or read about it. In this note, I’ll try to articulate why it could have been like that, and why this should not be the case&hellip;</p>
-      <p><a class="stream-more" href="blog/no-sure-loss-calibration-insurance.html">Continue reading &rarr;</a></p>
-    </section>
-    </div>
+    <footer>
+      &larr; <a href="../about.html#blog">Back to all posts</a>
+    </footer>
   </main>
 </body>
 </html>
