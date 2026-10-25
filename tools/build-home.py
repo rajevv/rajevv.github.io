@@ -257,6 +257,14 @@ def essay_entries():
 
 
 
+def link_siblings(html):
+    """Point an essay's links to other essays into blog/, where they live."""
+    essays = {p.name for p in (ROOT / "blog").glob("*.html")}
+    return re.sub(r'href="([^"/:#]+\.html)(#[^"]*)?"',
+                  lambda m: 'href="blog/%s%s"' % (m.group(1), m.group(2) or "")
+                  if m.group(1) in essays else m.group(0), html)
+
+
 VOID_TAGS = {"br", "img", "hr", "input", "meta", "link"}
 
 
@@ -306,7 +314,7 @@ def excerpt(essay_name, date, budget=150):
     html = (ROOT / "blog" / essay_name).read_text()
     title = re.search(r"<h1>(.*?)</h1>", html).group(1)
 
-    body = html.split("</h1>", 1)[1]
+    body = link_siblings(html.split("</h1>", 1)[1])
     body = re.sub(r"<figure.*?</figure>", "", body, flags=re.S)
     body = re.sub(r"<blockquote.*?</blockquote>", "", body, flags=re.S)
     # Margin notes belong to the essay page, so the excerpt drops their machinery.
@@ -386,6 +394,7 @@ def build(essay_name, date=None, older=()):
 
     # Whatever else the essay links relative to blog/ is one level up from here.
     html = html.replace('"../', '"')
+    html = link_siblings(html)
 
     if older:
         stream = "\n".join(excerpt(name, when) for name, when in older)
