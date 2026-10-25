@@ -323,6 +323,10 @@ def excerpt(essay_name, date, budget=150):
         if not paras and not lede and re.fullmatch(r"<em>.*</em>", text, re.S):
             lede = text
             continue
+        # Newer essays mark the subtitle with a class instead of wrapping it in <em>.
+        if not paras and not lede and "lede" in tag:
+            lede = "<em>%s</em>" % re.sub(r"^(&mdash;|—)\s*", "— ", text)
+            continue
         clipped, stop = clip_html(text, max(0, budget - words))
         words += len(re.findall(r"\S+", re.sub(r"<[^>]+>", " ", clipped)))
         paras.append(clipped)
