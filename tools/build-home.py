@@ -21,6 +21,12 @@ ABOUT = ROOT / "about.html"
 OUT = ROOT / "index.html"
 SITE = "https://rajevv.github.io/"
 
+# Search results and link previews describe the person, whichever essay is on the page.
+SITE_TITLE = "Rajeev Verma &mdash; PhD Candidate in Machine Learning, University of Amsterdam"
+SITE_DESCRIPTION = ("Rajeev Verma is a PhD candidate in machine learning at the University of "
+                    "Amsterdam, working on prediction and decision-making, calibration and "
+                    "imprecise probabilities. Essays on reasoning, agency and uncertainty.")
+
 RAIL = '''    <aside class="rail" aria-label="Elsewhere on this site">
       <p class="rail-name">Rajeev Verma</p>
       <p class="rail-role">PhD Candidate in Machine Learning, University of Amsterdam</p>
@@ -362,8 +368,6 @@ def build(essay_name, date=None, older=()):
     if date:
         html = html.replace("<h1>%s</h1>" % title,
                             '<h1>%s <span class="post-date">%s</span></h1>' % (title, date), 1)
-    description = re.search(r'<meta name="description" content="(.*?)"', html)
-    description = description.group(1) if description else title
 
     # Figures sit next to the essay; the homepage is one level above them.
     html = html.replace('src="%s_figs/' % stem, 'src="blog/%s_figs/' % stem)
@@ -372,16 +376,18 @@ def build(essay_name, date=None, older=()):
     header_image = SITE + header_image.group(1) if header_image else SITE + "assets/prof_pic.jpg"
 
     html = re.sub(r"<title>.*?</title>",
-                  "<title>Rajeev Verma &mdash; %s</title>" % title, html, count=1)
+                  "<title>%s</title>" % SITE_TITLE, html, count=1)
+    html = re.sub(r'<meta name="description" content=".*?" />',
+                  '<meta name="description" content="%s" />' % SITE_DESCRIPTION, html, count=1)
     html = re.sub(r'<link rel="canonical"[^>]*/>',
                   '<link rel="canonical" href="%s" />\n'
-                  '  <meta property="og:type" content="article" />\n'
-                  '  <meta property="og:title" content="%s &mdash; Rajeev Verma" />\n'
+                  '  <meta property="og:type" content="website" />\n'
+                  '  <meta property="og:title" content="%s" />\n'
                   '  <meta property="og:description" content="%s" />\n'
                   '  <meta property="og:url" content="%s" />\n'
                   '  <meta property="og:image" content="%s" />\n'
                   '  <meta name="twitter:card" content="summary_large_image" />'
-                  % (SITE, title, description, SITE, header_image), html, count=1)
+                  % (SITE, SITE_TITLE, SITE_DESCRIPTION, SITE, header_image), html, count=1)
 
     # The panel replaces the back-to-blog nav.
     html = re.sub(r'    <nav class="site-nav".*?</nav>\n', RAIL, html, count=1, flags=re.S)
